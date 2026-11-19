@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My account | Mirsad</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="../index.html"><img src="../img/mirsad-logo.png" alt="" width="30" height="30"><span>MIRSAD</span></a>
+  <nav><a href="../pricing.html">Pricing</a><a href="../contact.html">Help</a><button id="signout" class="link" hidden>Sign out</button></nav>
+</header>
+
+<main>
+  <div id="loading" class="center muted">Loading…</div>
+
+  <!-- Signed out -->
+  <section id="auth" class="card narrow" hidden>
+    <div class="tabs"><button data-tab="signin" class="on">Sign in</button><button data-tab="signup">Create account</button></div>
+
+    <form id="f-signin" class="form">
+      <label>Email<input type="email" name="email" autocomplete="email" required></label>
+      <label>Password<input type="password" name="password" autocomplete="current-password" required></label>
+      <button class="btn" type="submit">Sign in</button>
+      <button class="link small" type="button" id="to-forgot">Forgot your password?</button>
+    </form>
+
+    <form id="f-signup" class="form" hidden>
+      <label>Full name<input name="full_name" autocomplete="name" required></label>
+      <label>Email<input type="email" name="email" autocomplete="email" required></label>
+      <label>Phone <span class="muted">(with country code)</span><input type="tel" name="phone" autocomplete="tel" placeholder="+971 50 000 0000"></label>
+      <label>Password <span class="muted">(at least 8 characters)</span><input type="password" name="password" minlength="8" autocomplete="new-password" required></label>
+      <button class="btn" type="submit">Create account</button>
+      <p class="small muted">By creating an account you agree to our <a href="../privacy.html">privacy policy</a>.</p>
+    </form>
+
+    <form id="f-forgot" class="form" hidden>
+      <p class="muted">Enter your email and we'll send you a link to set a new password.</p>
+      <label>Email<input type="email" name="email" autocomplete="email" required></label>
+      <button class="btn" type="submit">Send reset link</button>
+      <button class="link small" type="button" data-back>Back to sign in</button>
+    </form>
+
+    <form id="f-reset" class="form" hidden>
+      <p class="muted">Choose a new password.</p>
+      <label>New password<input type="password" name="password" minlength="8" autocomplete="new-password" required></label>
+      <button class="btn" type="submit">Save new password</button>
+    </form>
+
+    <p id="auth-msg" class="msg" role="status"></p>
+  </section>
+
+  <!-- Signed in -->
+  <section id="dash" hidden>
+    <h1>Hello, <span id="hello-name">there</span></h1>
+    <p id="banner" class="msg" role="status"></p>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Your plan</h2>
+        <div id="plan-box"></div>
+      </div>
+      <div class="card">
+        <h2>Usage this month</h2>
+        <div class="meter"><div class="meter-top"><span>Tracked products</span><b id="u-tracked">0</b></div><div class="bar"><i id="b-tracked"></i></div></div>
+        <div class="meter"><div class="meter-top"><span>Product Database searches</span><b id="u-searches">0</b></div><div class="bar"><i id="b-searches"></i></div></div>
+        <p class="small muted">Resets on the 1st of every month.</p>
+      </div>
+    </div>
+
+    <div id="choose" class="card" hidden>
+      <div class="row-between"><h2>Choose a plan</h2>
+        <div class="toggle" role="group" aria-label="Billing period"><button data-int="month">Monthly</button><button data-int="year" class="on">Yearly <small>save ~35%</small></button></div>
+      </div>
+      <div class="plans">
+        <div class="plan"><h3>Starter</h3><p class="price" data-m="$29 / month" data-y="$228 / year">$228 / year</p><p class="muted small">5 tracked products, 50 database searches a month</p><button class="btn" data-plan="starter">Choose Starter</button></div>
+        <div class="plan pro"><h3>Professional</h3><p class="price" data-m="$59 / month" data-y="$468 / year">$468 / year</p><p class="muted small">Unlimited tracked products and searches</p><button class="btn" data-plan="professional">Choose Professional</button></div>
+      </div>
+      <p class="small muted">Early users: enter code <b>EARLY30</b> at checkout for 30% off your first year. Payments are handled securely by Stripe.</p>
+    </div>
+
+    <div class="card">
+      <h2>Your tools</h2>
+      <div class="tools">
+        <div><b>Product Database</b><span>Amazon and Noon, UAE, KSA and Egypt</span><em>Coming soon</em></div>
+        <div><b>Product Tracker</b><span>Sales, revenue and BSR over time</span><em>Coming soon</em></div>
+        <div><b>Alerts</b><span>Price, reviews, stock and BSR changes</span><em>Coming soon</em></div>
+        <div><b>Keyword Scout</b><span>Search volume and Reverse ASIN</span><em>Coming soon</em></div>
+        <div><b>Keyword List</b><span>Save keywords for each product</span><em>Coming soon</em></div>
+        <div><b>Listing Builder</b><span>Write and improve your listing</span><em>Coming soon</em></div>
+        <div><b>Chrome extension</b><span>Research panel on Amazon search pages</span><a href="https://chromewebstore.google.com/detail/lmcdmjciemdaafndgaojaeoffjackdka" target="_blank" rel="noopener">Open →</a></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Your details</h2>
+      <form id="f-profile" class="form two">
+        <label>Full name<input name="full_name" autocomplete="name" required></label>
+        <label>Email<input name="email" disabled></label>
+        <label>Phone<input type="tel" name="phone" autocomplete="tel"></label>
+        <label>Country<input name="country" autocomplete="country-name"></label>
+        <label class="wide">Address line 1<input name="address_line1" autocomplete="address-line1"></label>
+        <label class="wide">Address line 2<input name="address_line2" autocomplete="address-line2"></label>
+        <label>City<input name="city" autocomplete="address-level2"></label>
+        <div class="wide"><button class="btn" type="submit">Save details</button> <span id="profile-msg" class="msg inline" role="status"></span></div>
+      </form>
+      <p class="small muted">Card details and invoices are kept by Stripe, not on this site. Use <b>Manage billing</b> to change them.</p>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body></html>
