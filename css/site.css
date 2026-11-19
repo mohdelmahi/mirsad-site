@@ -152,3 +152,7 @@ body.mx-inner .eyebrow{color:#22D3EE}
 .mx-ec-row button:disabled{opacity:.6;cursor:wait}
 .mx-ec-msg{margin-top:8px;font-size:13px;color:#7F8BB0}.mx-ec-msg.ok{color:#34D399}.mx-ec-msg.err{color:#FBBF77}
 .mx-emailcalc .hp{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;opacity:0!important}
+.mx-login{margin-left:auto;margin-right:14px;font-weight:700;font-size:14px;color:#C9D2EE!important;text-decoration:none!important;white-space:nowrap}
+.mx-login:hover{color:#fff!important}
+.mx-login+.mx-cta{margin-left:0}
+@media(max-width:560px){.mx-login{margin-right:8px;font-size:13px}}
