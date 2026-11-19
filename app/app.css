@@ -1,4 +1,5 @@
 :root{--bg:#070B1F;--card:#0E1638;--card2:#0A1130;--line:rgba(120,150,255,.2);--ink:#EEF2FF;--dim:#9AA6C9;--faint:#6B78A0;--blue:#3D89F2;--violet:#6D5CF6;--green:#34D399;--red:#F87171}
+[hidden]{display:none!important}
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:radial-gradient(1200px 600px at 70% -10%,rgba(61,137,242,.18),transparent),var(--bg);color:var(--ink);font-family:"Plus Jakarta Sans",system-ui,sans-serif;line-height:1.5;min-height:100vh}
