@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/site.css">
+<link rel="stylesheet" href="../css/light.css">
+<meta name="robots" content="noindex,nofollow">
+</head><body class="mx-inner lt">
+<header class="mx-head">
+  <div class="mx-wrap mx-nav">
+    <a class="mx-logo" href="../index.html"><img src="../img/mirsad-logo.png" alt="Mirsad Analytics" width="34" height="34"><span>MIRSAD</span></a>
+    <nav class="mx-links" aria-label="Main">
+      <a href="../index.html#features">Features</a>
+      <div class="mx-dd"><button class="mx-ddb" type="button" aria-expanded="false">Tools <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 4.5l3 3 3-3"/></svg></button>
+        <div class="mx-ddm mega"><div class="col"><h6>Product research</h6><a class="mi" href="../tools/chrome-extension.html"><b>Chrome extension <em class="bd bd-live">Live</em></b><small>Every product on an Amazon search page in one table, with fees and sales estimates</small></a><div class="mi off"><b>Product Database <em class="bd bd-soon">Soon</em></b><small>Filter Amazon UAE, KSA and Egypt products by price, profit, rank and sales</small></div><div class="mi off"><b>Product Tracker <em class="bd bd-soon">Soon</em></b><small>Follow sales, revenue and BSR of any product over time</small></div><div class="mi off"><b>Alerts <em class="bd bd-soon">Soon</em></b><small>Get told when a price, review count, stock or BSR changes</small></div></div><div class="col"><h6>Keywords and listings</h6><div class="mi off"><b>Keyword Scout <em class="bd bd-soon">Soon</em></b><small>Search volume and Reverse ASIN for the keywords competitors rank for</small></div><div class="mi off"><b>Keyword List <em class="bd bd-soon">Soon</em></b><small>Save the best keywords for each product, ready for your listing</small></div><a class="mi" href="../tools/listing-builder.html"><b>Listing builder <em class="bd bd-free">Free</em></b><small>Write your title, bullets and description within Amazon's limits</small></a></div><div class="col"><h6>Free tools</h6><a class="mi" href="../tools/profit-calculator.html"><b>Profit calculator <em class="bd bd-free">Free</em></b><small>Real referral and FBA fees for the UAE, Saudi Arabia and Egypt</small></a><a class="mi" href="../tools/amazon-url-builder.html"><b>Amazon URL builder <em class="bd bd-free">Free</em></b><small>Brand, ASIN, keyword and add-to-cart links in Amazon's own format</small></a><a class="mi" href="../tools/qr-code-generator.html"><b>QR code generator <em class="bd bd-free">Free</em></b><small>Turn any listing or store link into a QR code for packaging</small></a></div><div class="col"><h6>Reports and guides</h6><a class="mi" href="../niche-radar.html"><b>Niche Radar <em class="bd bd-monthly">Monthly</em></b><small>20 niches worth checking on Amazon UAE, new every month</small></a><a class="mi" href="../fee-cheat-sheet.html"><b>Fee cheat sheet <em class="bd bd-pdf">PDF</em></b><small>Every referral and FBA fee for the three marketplaces on one PDF</small></a><a class="mi" href="../pricing.html"><b>Plans and pricing</b><small>Starter and Professional, monthly or yearly</small></a></div></div>
+      </div>
+      <a href="../index.html#how">How it works</a>
+      <a href="../pricing.html">Pricing</a>
+      <a href="../faq.html">FAQ</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+    <a class="mx-login" href="../app/">Log in</a>
+    <a class="mx-cta" href="https://chromewebstore.google.com/detail/lmcdmjciemdaafndgaojaeoffjackdka" target="_blank" rel="noopener">Add to Chrome, free</a>
+    <button class="mx-burger" type="button" aria-label="Open menu">☰</button>
+  </div>
+</header>
+<title>Chrome Extension — Mirsad Analytics</title>
+<style>
+  :root {
+    --navy: #12305A; --azure: #1E70E6; --azure-bright: #2457D6;
+    --bg: #F3F5F8; --surface: #FFFFFF; --border: #E1E6ED;
+    --ink: #14202E; --ink-dim: #5B6B80; --live: #1F8A5F; --estimated: #B8791F;
+    --font-display: "Segoe UI Semibold", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --font-body: "Segoe UI", system-ui, -apple-system, sans-serif;
+    --font-mono: "SF Mono", "Cascadia Code", "JetBrains Mono", Consolas, "Roboto Mono", monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --navy: #9CC0F5; --azure: #4F92F2; --azure-bright: #6FA6F6; --bg: #0B1626; --surface: #121F33; --border: #22354F; --ink: #E7ECF4; --ink-dim: #94A3B8; --live: #3FBE85; --estimated: #E0A83E; color-scheme: dark; }
+  }
+  :root[data-theme="light"] { --navy: #9CC0F5; --azure: #4F92F2; --azure-bright: #6FA6F6; --bg: #0B1626; --surface: #121F33; --border: #22354F; --ink: #E7ECF4; --ink-dim: #94A3B8; --live: #3FBE85; --estimated: #E0A83E; color-scheme: dark; }
+  :root[data-theme="light"] { --navy: #12305A; --azure: #1E70E6; --azure-bright: #2457D6; --bg: #F3F5F8; --surface: #FFFFFF; --border: #E1E6ED; --ink: #14202E; --ink-dim: #5B6B80; --live: #1F8A5F; --estimated: #B8791F; color-scheme: light; }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--font-body); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  a { color: var(--azure); text-decoration: none; }
+  a:hover, a:focus-visible { text-decoration: underline; }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  nav.wrap { display: flex; align-items: center; gap: 10px; padding: 24px; font-size: 14px; max-width: 760px; }
+  .mark { display: inline-flex; align-items: center; justify-content: center; border-radius: 22%; background: var(--azure); width: 28px; height: 28px; flex: none; }
+  .mark svg { width: 16px; height: 16px; display: block; }
+  .wordmark { font-family: var(--font-display); font-weight: 700; font-size: 15px; text-transform: uppercase; }
+  nav .back { margin-left: auto; color: var(--ink-dim); font-size: 13px; }
+
+  main { padding: 20px 0 80px; }
+  .eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--azure); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .status-pill { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 9px; border-radius: 10px; background: var(--live); color: #fff; }
+  h1 { font-family: var(--font-display); font-size: clamp(24px, 4vw, 32px); margin: 0; text-wrap: balance; }
+  .lede { color: var(--ink-dim); font-size: 15px; margin-top: 14px; max-width: 560px; }
+
+  .note-box { margin-top: 24px; padding: 16px 18px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); font-size: 13.5px; color: var(--ink-dim); }
+  .note-box strong { color: var(--ink); }
+
+  .section-sub { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-dim); margin: 44px 0 18px; }
+
+  .steps { display: flex; flex-direction: column; gap: 22px; counter-reset: step; }
+  .step { position: relative; padding-left: 42px; }
+  .step::before {
+    counter-increment: step; content: counter(step);
+    position: absolute; left: 0; top: 0; width: 28px; height: 28px; border-radius: 50%;
+    background: var(--azure); color: #fff; font-family: var(--font-mono); font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step h3 { font-size: 16px; font-family: var(--font-body); font-weight: 600; margin: 0; }
+  .step p { color: var(--ink-dim); font-size: 14px; margin: 6px 0 0; }
+
+  .ledger { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+  @media (max-width: 520px) { .ledger { grid-template-columns: 1fr; } }
+  .ledger-item { background: var(--surface); padding: 16px 18px; }
+  .ledger-item .field { font-family: var(--font-mono); font-size: 12.5px; color: var(--azure); }
+  .ledger-item .desc { font-size: 13px; color: var(--ink-dim); margin-top: 5px; }
+
+  .cta-row { margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--font-body); font-weight: 600; font-size: 14px; padding: 11px 18px; border-radius: 4px;
+    border: 1px solid var(--azure); background: var(--azure); color: #fff; cursor: pointer; text-decoration: none;
+  }
+  .btn:hover, .btn:focus-visible { background: var(--azure-bright); border-color: var(--azure-bright); text-decoration: none; }
+</style>
+
+<template id="waypoint-svg">
+  <svg viewBox="0 0 100 100" fill="none">
+    <path d="M30,70 L30,34 L50,54 L70,34 L70,70" stroke="#FFFFFF" stroke-width="7.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <polygon points="50,54 45,70 50,65 55,70" fill="#FFFFFF"/>
+  </svg>
+</template>
+
+<main class="wrap">
+  <div class="eyebrow">Tools &middot; Chrome extension <span class="status-pill">Live</span></div>
+  <h1>How the Chrome extension works.</h1>
+  <p class="lede">The core Mirsad product: it reads a live Amazon listing in your own browser and shows you the real numbers behind it, price, fees, net revenue, and a listing quality read, without leaving the page you're already on.</p>
+
+  <div class="note-box"><strong>Now live:</strong> Mirsad Analytics is on the Chrome Web Store and works on amazon.ae, amazon.sa and amazon.eg. <a href="https://chromewebstore.google.com/detail/lmcdmjciemdaafndgaojaeoffjackdka" target="_blank" rel="noopener">Install it free</a>.</div>
+
+  <div class="section-sub">How to use it</div>
+  <div class="steps">
+    <div class="step">
+      <h3>Install the extension</h3>
+      <p>Chrome, Manifest V3. No account, no setup screen, nothing else to configure first.</p>
+    </div>
+    <div class="step">
+      <h3>Search or browse Amazon as normal</h3>
+      <p>Amazon.ae, Amazon.sa, or Amazon.eg. The panel works on search results pages, exactly the way you already research. Support for individual product pages is coming soon.</p>
+    </div>
+    <div class="step">
+      <h3>Open the panel</h3>
+      <p>A results table appears over the page, draggable and resizable, enriching every visible product with the fields below.</p>
+    </div>
+    <div class="step">
+      <h3>Pick your columns and export</h3>
+      <p>Use the column picker to show only what a given research pass needs. Select specific rows or leave nothing selected to export everything visible as a CSV file.</p>
+    </div>
+  </div>
+
+  <div class="section-sub">What appears in the panel</div>
+  <div class="ledger">
+    <div class="ledger-item"><div class="field">PRICE / RATING / REVIEWS</div><div class="desc">Read live from the rendered page.</div></div>
+    <div class="ledger-item"><div class="field">BSR / CATEGORY / BRAND</div><div class="desc">Pulled from each listing's own product data.</div></div>
+    <div class="ledger-item"><div class="field">FULFILLMENT / SELLERS</div><div class="desc">Who's fulfilling it, how many sellers are competing.</div></div>
+    <div class="ledger-item"><div class="field">DIMENSIONS / WEIGHT</div><div class="desc">Feeds the FBA size-tier fee directly.</div></div>
+    <div class="ledger-item"><div class="field">REFERRAL + FBA FEE</div><div class="desc">From that marketplace's own published fee schedule.</div></div>
+    <div class="ledger-item"><div class="field">NET REVENUE / TIER</div><div class="desc">Price minus real fees.</div></div>
+    <div class="ledger-item"><div class="field">LISTING QUALITY SCORE</div><div class="desc">Built from what's actually on the page.</div></div>
+    <div class="ledger-item"><div class="field">CSV EXPORT</div><div class="desc">Selected rows, or everything visible.</div></div>
+  </div>
+
+  <p class="mx-price-line" style="margin:28px 0 0"><b>Free during launch.</b> Paid plans come later, and early users get a discount.</p>
+  <div class="cta-row">
+    <a class="btn" href="https://chromewebstore.google.com/detail/lmcdmjciemdaafndgaojaeoffjackdka" target="_blank" rel="noopener">Add to Chrome, free</a>
+    <a href="../contact.html">Contact us</a>
+    <a href="../index.html#tools">See all tools</a>
+  </div>
+</main>
+<footer class="mx-foot">
+  <div class="mx-wrap">
+    <div class="mx-fgrid">
+      <div><a class="mx-logo" href="../index.html"><img src="../img/mirsad-logo.png" alt="Mirsad Analytics" width="34" height="34"><span>MIRSAD</span></a><p>Amazon product research built for sellers in the UAE, Saudi Arabia and Egypt.</p></div>
+      <div><h5>Product</h5><a href="../tools/chrome-extension.html">Chrome extension</a><a href="../index.html#features">Features</a><a href="../index.html#how">How it works</a><a href="../pricing.html">Pricing</a></div>
+      <div><h5>Free tools</h5><a href="../tools/profit-calculator.html">Profit calculator</a><a href="../tools/qr-code-generator.html">QR code generator</a><a href="../tools/amazon-url-builder.html">Amazon URL builder</a><a href="../tools/listing-builder.html">Listing builder</a><a href="../fee-cheat-sheet.html">Fee cheat sheet (PDF)</a><a href="../niche-radar.html">Niche Radar (monthly)</a></div>
+      <div><h5>Company</h5><a href="../app/">Log in</a><a href="../faq.html">FAQ</a><a href="../contact.html">Contact us</a><a href="../privacy.html">Privacy policy</a></div>
+    </div>
+    <div class="mx-legal"><span>© 2026 Mirsad Analytics, a Uneekli AI company</span><span>Mirsad Analytics is an independent tool and is not affiliated with, endorsed by or sponsored by Amazon. Amazon is a trademark of Amazon.com, Inc. or its affiliates.</span></div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('[data-mark]').forEach(function (el) {
+    el.innerHTML = document.getElementById('waypoint-svg').innerHTML;
+  });
+</script>
+
+<script src="../js/site.js"></script>
+<div class="draft-flag">Draft preview</div>
+</body></html>

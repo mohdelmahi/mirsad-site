@@ -1,0 +1,359 @@
+<!doctype html><html lang="en" data-theme="light"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style><link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/site.css">
+<link rel="stylesheet" href="../css/light.css">
+<meta name="robots" content="noindex,nofollow">
+</head><body class="mx-inner lt">
+<header class="mx-head">
+  <div class="mx-wrap mx-nav">
+    <a class="mx-logo" href="../index.html"><img src="../img/mirsad-logo.png" alt="Mirsad Analytics" width="34" height="34"><span>MIRSAD</span></a>
+    <nav class="mx-links" aria-label="Main">
+      <a href="../index.html#features">Features</a>
+      <div class="mx-dd"><button class="mx-ddb" type="button" aria-expanded="false">Tools <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 4.5l3 3 3-3"/></svg></button>
+        <div class="mx-ddm mega"><div class="col"><h6>Product research</h6><a class="mi" href="../tools/chrome-extension.html"><b>Chrome extension <em class="bd bd-live">Live</em></b><small>Every product on an Amazon search page in one table, with fees and sales estimates</small></a><div class="mi off"><b>Product Database <em class="bd bd-soon">Soon</em></b><small>Filter Amazon UAE, KSA and Egypt products by price, profit, rank and sales</small></div><div class="mi off"><b>Product Tracker <em class="bd bd-soon">Soon</em></b><small>Follow sales, revenue and BSR of any product over time</small></div><div class="mi off"><b>Alerts <em class="bd bd-soon">Soon</em></b><small>Get told when a price, review count, stock or BSR changes</small></div></div><div class="col"><h6>Keywords and listings</h6><div class="mi off"><b>Keyword Scout <em class="bd bd-soon">Soon</em></b><small>Search volume and Reverse ASIN for the keywords competitors rank for</small></div><div class="mi off"><b>Keyword List <em class="bd bd-soon">Soon</em></b><small>Save the best keywords for each product, ready for your listing</small></div><a class="mi" href="../tools/listing-builder.html"><b>Listing builder <em class="bd bd-free">Free</em></b><small>Write your title, bullets and description within Amazon's limits</small></a></div><div class="col"><h6>Free tools</h6><a class="mi" href="../tools/profit-calculator.html"><b>Profit calculator <em class="bd bd-free">Free</em></b><small>Real referral and FBA fees for the UAE, Saudi Arabia and Egypt</small></a><a class="mi" href="../tools/amazon-url-builder.html"><b>Amazon URL builder <em class="bd bd-free">Free</em></b><small>Brand, ASIN, keyword and add-to-cart links in Amazon's own format</small></a><a class="mi" href="../tools/qr-code-generator.html"><b>QR code generator <em class="bd bd-free">Free</em></b><small>Turn any listing or store link into a QR code for packaging</small></a></div><div class="col"><h6>Reports and guides</h6><a class="mi" href="../niche-radar.html"><b>Niche Radar <em class="bd bd-monthly">Monthly</em></b><small>20 niches worth checking on Amazon UAE, new every month</small></a><a class="mi" href="../fee-cheat-sheet.html"><b>Fee cheat sheet <em class="bd bd-pdf">PDF</em></b><small>Every referral and FBA fee for the three marketplaces on one PDF</small></a><a class="mi" href="../pricing.html"><b>Plans and pricing</b><small>Starter and Professional, monthly or yearly</small></a></div></div>
+      </div>
+      <a href="../index.html#how">How it works</a>
+      <a href="../pricing.html">Pricing</a>
+      <a href="../faq.html">FAQ</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+    <a class="mx-login" href="../app/">Log in</a>
+    <a class="mx-cta" href="https://chromewebstore.google.com/detail/lmcdmjciemdaafndgaojaeoffjackdka" target="_blank" rel="noopener">Add to Chrome, free</a>
+    <button class="mx-burger" type="button" aria-label="Open menu">☰</button>
+  </div>
+</header>
+<title>Amazon URL Builder — Mirsad Analytics</title>
+<style>
+  :root {
+    --navy: #12305A; --azure: #1E70E6; --azure-bright: #2457D6;
+    --bg: #F3F5F8; --surface: #FFFFFF; --border: #E1E6ED;
+    --ink: #14202E; --ink-dim: #5B6B80; --live: #1F8A5F; --estimated: #B8791F;
+    --font-display: "Segoe UI Semibold", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --font-body: "Segoe UI", system-ui, -apple-system, sans-serif;
+    --font-mono: "SF Mono", "Cascadia Code", "JetBrains Mono", Consolas, "Roboto Mono", monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --navy: #9CC0F5; --azure: #4F92F2; --azure-bright: #6FA6F6; --bg: #0B1626; --surface: #121F33; --border: #22354F; --ink: #E7ECF4; --ink-dim: #94A3B8; --live: #3FBE85; --estimated: #E0A83E; color-scheme: dark; }
+  }
+  :root[data-theme="light"] { --navy: #9CC0F5; --azure: #4F92F2; --azure-bright: #6FA6F6; --bg: #0B1626; --surface: #121F33; --border: #22354F; --ink: #E7ECF4; --ink-dim: #94A3B8; --live: #3FBE85; --estimated: #E0A83E; color-scheme: dark; }
+  :root[data-theme="light"] { --navy: #12305A; --azure: #1E70E6; --azure-bright: #2457D6; --bg: #F3F5F8; --surface: #FFFFFF; --border: #E1E6ED; --ink: #14202E; --ink-dim: #5B6B80; --live: #1F8A5F; --estimated: #B8791F; color-scheme: light; }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--font-body); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  a { color: var(--azure); text-decoration: none; }
+  a:hover, a:focus-visible { text-decoration: underline; }
+
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  nav.wrap { display: flex; align-items: center; gap: 10px; padding: 24px; font-size: 14px; max-width: 900px; }
+  .mark { display: inline-flex; align-items: center; justify-content: center; border-radius: 22%; background: var(--azure); width: 28px; height: 28px; flex: none; }
+  .mark svg { width: 16px; height: 16px; display: block; }
+  .wordmark { font-family: var(--font-display); font-weight: 700; font-size: 15px; text-transform: uppercase; }
+  nav .back { margin-left: auto; color: var(--ink-dim); font-size: 13px; }
+
+  main { padding: 20px 0 80px; }
+  .eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--azure); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .status-pill { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 9px; border-radius: 10px; background: var(--live); color: #fff; }
+  h1 { font-family: var(--font-display); font-size: clamp(24px, 4vw, 32px); margin: 0; text-wrap: balance; }
+  .lede { color: var(--ink-dim); font-size: 15px; margin-top: 12px; max-width: 520px; }
+
+  .tool-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0; margin-top: 28px; overflow: hidden; display: grid; grid-template-columns: 260px 1fr; }
+  @media (max-width: 720px) { .tool-panel { grid-template-columns: 1fr; } }
+
+  .type-list { border-right: 1px solid var(--border); background: var(--bg); }
+  @media (max-width: 720px) { .type-list { border-right: none; border-bottom: 1px solid var(--border); } }
+  .type-item { display: block; width: 100%; text-align: left; padding: 16px 18px; border: none; border-bottom: 1px solid var(--border); background: transparent; color: var(--ink); cursor: pointer; font-family: var(--font-body); }
+  .type-item:last-child { border-bottom: none; }
+  .type-item .t-name { display: block; font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  .type-item .t-desc { display: block; font-size: 12.5px; color: var(--ink-dim); line-height: 1.4; }
+  .type-item.is-active { background: var(--surface); box-shadow: inset 3px 0 0 var(--azure); }
+  .type-item.is-active .t-name { color: var(--azure); }
+  .type-item:hover { background: var(--surface); }
+
+  .form-side { padding: 32px; }
+  .row2 { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 18px; }
+  .field { margin-bottom: 14px; }
+  .field:last-child { margin-bottom: 0; }
+  .field label { display: block; font-size: 12.5px; color: var(--ink-dim); margin-bottom: 6px; }
+  .field .opt { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-dim); margin-left: 6px; }
+  select, input[type="text"], input[type="number"] {
+    width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--ink);
+    font-family: var(--font-body); font-size: 15px; padding: 11px 13px; border-radius: 4px;
+  }
+  select:focus-visible, input:focus-visible { outline: 2px solid var(--azure); outline-offset: 1px; }
+
+  .example-note { font-size: 12.5px; color: var(--ink-dim); margin: -6px 0 18px; padding: 10px 12px; background: var(--bg); border-radius: 4px; font-family: var(--font-mono); word-break: break-all; }
+
+  .field-pair { display: grid; grid-template-columns: 1fr 100px; gap: 10px; }
+  @media (max-width: 480px) { .field-pair { grid-template-columns: 1fr; } }
+
+  .btn {
+    font-family: var(--font-body); font-weight: 600; font-size: 15px; padding: 12px 20px; border-radius: 4px;
+    border: 1px solid var(--azure); background: var(--azure); color: #fff; cursor: pointer; width: 100%; margin-top: 6px;
+  }
+  .btn:hover, .btn:focus-visible { background: var(--azure-bright); border-color: var(--azure-bright); }
+  .btn:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+  .field-note { font-family: var(--font-mono); font-size: 12px; color: var(--ink-dim); margin-top: 12px; min-height: 1em; }
+
+  .output { margin-top: 24px; display: none; flex-direction: column; gap: 12px; padding-top: 24px; border-top: 1px solid var(--border); }
+  .output.is-visible { display: flex; }
+  .output-url { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 14px; word-break: break-all; }
+  .output-actions { display: flex; gap: 10px; }
+  .output-actions button, .output-actions a {
+    flex: 1; text-align: center; font-family: var(--font-body); font-weight: 600; font-size: 14px; padding: 10px 16px; border-radius: 4px;
+    border: 1px solid var(--border); background: var(--bg); color: var(--ink); cursor: pointer;
+  }
+  .output-actions a { border-color: var(--azure); background: var(--azure); color: #fff; }
+  .output-actions button:hover { border-color: var(--azure); color: var(--azure); }
+  .output-actions a:hover { background: var(--azure-bright); border-color: var(--azure-bright); }
+
+  .privacy-note { font-size: 13px; color: var(--ink-dim); margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }
+  .back-link { display: inline-block; margin-top: 20px; font-size: 13.5px; color: var(--ink-dim); }
+</style>
+
+<template id="waypoint-svg">
+  <svg viewBox="0 0 100 100" fill="none">
+    <path d="M30,70 L30,34 L50,54 L70,34 L70,70" stroke="#FFFFFF" stroke-width="7.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <polygon points="50,54 45,70 50,65 55,70" fill="#FFFFFF"/>
+  </svg>
+</template>
+
+<main class="wrap">
+  <div class="eyebrow">Tools &middot; Amazon URL builder <span class="status-pill">Live</span></div>
+  <h1>Structured Amazon links, built for your own products.</h1>
+  <p class="lede">Five standard Amazon storefront link formats: search links scoped to your brand, ASIN, or keywords, and direct add-to-cart links. Not proprietary tracking, just the same query parameters Amazon's own storefront already understands.</p>
+
+  <div class="tool-panel">
+    <div class="type-list" id="type-list">
+      <button type="button" class="type-item is-active" data-type="brand">
+        <span class="t-name">Brand-Centric URL</span>
+        <span class="t-desc">Drive shoppers to a curated selection of your Amazon FBA store's products, scoped to your brand name and chosen keywords, optionally bounded by a price range.</span>
+      </button>
+      <button type="button" class="type-item" data-type="asin">
+        <span class="t-name">ASIN-Driven URL</span>
+        <span class="t-desc">Provide visitors with a direct link to your product page via an ASIN and keyword combination.</span>
+      </button>
+      <button type="button" class="type-item" data-type="secret">
+        <span class="t-name">Secret Keyword Redirection</span>
+        <span class="t-desc">Guide users to products associated with specific keywords, with your ASIN appended as an extra, less visible search term.</span>
+      </button>
+      <button type="button" class="type-item" data-type="cart">
+        <span class="t-name">Streamlined 'Add to Cart'</span>
+        <span class="t-desc">Send shoppers straight to their Amazon cart with your product already added, using Amazon's own remote add-to-cart link format.</span>
+      </button>
+      <button type="button" class="type-item" data-type="buytogether">
+        <span class="t-name">'Buy Together' Convenience</span>
+        <span class="t-desc">Same as add to cart, for two or three of your own products at once.</span>
+      </button>
+    </div>
+
+    <div class="form-side">
+      <div class="field">
+        <label for="marketplace">Marketplace</label>
+        <select id="marketplace">
+          <option value="amazon.ae">Amazon.ae (UAE)</option>
+          <option value="amazon.sa">Amazon.sa (Saudi Arabia)</option>
+          <option value="amazon.eg">Amazon.eg (Egypt)</option>
+        </select>
+      </div>
+
+      <div class="example-note" id="example-note"></div>
+
+      <div id="fields-brand" class="type-fields">
+        <div class="field"><label for="brand-name">Brand name<span class="opt">mandatory</span></label><input type="text" id="brand-name" placeholder="e.g. Forest Heal" /></div>
+        <div class="field"><label for="brand-keywords">Keywords<span class="opt">mandatory</span></label><input type="text" id="brand-keywords" placeholder="e.g. sugar scrub" /></div>
+        <div class="field-pair">
+          <div class="field"><label for="brand-low">Low price<span class="opt">optional</span></label><input type="number" id="brand-low" min="0" placeholder="0" /></div>
+          <div class="field"><label for="brand-high">High price<span class="opt">optional</span></label><input type="number" id="brand-high" min="0" placeholder="0" /></div>
+        </div>
+      </div>
+
+      <div id="fields-asin" class="type-fields" style="display:none;">
+        <div class="field"><label for="asin-code">ASIN<span class="opt">mandatory</span></label><input type="text" id="asin-code" placeholder="e.g. B08XXXXXXX" /></div>
+        <div class="field"><label for="asin-keywords">Keywords<span class="opt">mandatory</span></label><input type="text" id="asin-keywords" placeholder="e.g. coffee mugs" /></div>
+      </div>
+
+      <div id="fields-secret" class="type-fields" style="display:none;">
+        <div class="field"><label for="secret-keywords">Keywords<span class="opt">mandatory</span></label><input type="text" id="secret-keywords" placeholder="e.g. coffee mugs" /></div>
+        <div class="field"><label for="secret-asin">ASIN to append<span class="opt">mandatory</span></label><input type="text" id="secret-asin" placeholder="e.g. B08XXXXXXX" /></div>
+      </div>
+
+      <div id="fields-cart" class="type-fields" style="display:none;">
+        <div class="field-pair">
+          <div class="field"><label for="cart-asin">ASIN<span class="opt">mandatory</span></label><input type="text" id="cart-asin" placeholder="e.g. B08XXXXXXX" /></div>
+          <div class="field"><label for="cart-qty">Qty<span class="opt">optional</span></label><input type="number" id="cart-qty" min="1" placeholder="1" /></div>
+        </div>
+      </div>
+
+      <div id="fields-buytogether" class="type-fields" style="display:none;">
+        <div class="field-pair">
+          <div class="field"><label for="bt-asin1">ASIN 1<span class="opt">mandatory</span></label><input type="text" id="bt-asin1" placeholder="e.g. B08XXXXXXX" /></div>
+          <div class="field"><label for="bt-qty1">Qty<span class="opt">optional</span></label><input type="number" id="bt-qty1" min="1" placeholder="1" /></div>
+        </div>
+        <div class="field-pair">
+          <div class="field"><label for="bt-asin2">ASIN 2<span class="opt">mandatory</span></label><input type="text" id="bt-asin2" placeholder="e.g. B08YYYYYYY" /></div>
+          <div class="field"><label for="bt-qty2">Qty<span class="opt">optional</span></label><input type="number" id="bt-qty2" min="1" placeholder="1" /></div>
+        </div>
+        <div class="field-pair">
+          <div class="field"><label for="bt-asin3">ASIN 3<span class="opt">optional</span></label><input type="text" id="bt-asin3" placeholder="e.g. B08ZZZZZZZ" /></div>
+          <div class="field"><label for="bt-qty3">Qty<span class="opt">optional</span></label><input type="number" id="bt-qty3" min="1" placeholder="1" /></div>
+        </div>
+      </div>
+
+      <button class="btn" id="create-btn" type="button">Create link</button>
+      <div class="field-note" id="field-note"></div>
+
+      <div class="output" id="output">
+        <div class="output-url" id="output-url"></div>
+        <div class="output-actions">
+          <button type="button" id="copy-btn">Copy</button>
+          <a id="open-link" href="#" target="_blank" rel="noopener">Open</a>
+        </div>
+      </div>
+      <div class="mx-get" id="mx-get" role="region" aria-label="Get Mirsad">
+      <h3>Know which products are worth linking to before you build the link.</h3>
+      <p>The Mirsad Chrome extension shows price, BSR, fees, net revenue and estimated sales for every product on an amazon.ae, amazon.sa or amazon.eg search page, in one click.</p>
+      <a class="mx-get-btn" href="https://chromewebstore.google.com/detail/lmcdmjciemdaafndgaojaeoffjackdka" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="margin-right:8px;flex:none"><circle cx="12" cy="12" r="10" fill="#fff" opacity=".95"/><circle cx="12" cy="12" r="4.2" fill="#3D89F2"/></svg>Add to Chrome, it’s free</a>
+      <div class="mx-get-foot"><span><b>Free during launch.</b> Paid plans come later, and early users get a discount.</span><a href="chrome-extension.html">See how it works</a></div>
+    </div>
+    </div>
+  </div>
+  <a class="back-link" href="../index.html#tools">&larr; See all tools</a>
+</main>
+<footer class="mx-foot">
+  <div class="mx-wrap">
+    <div class="mx-fgrid">
+      <div><a class="mx-logo" href="../index.html"><img src="../img/mirsad-logo.png" alt="Mirsad Analytics" width="34" height="34"><span>MIRSAD</span></a><p>Amazon product research built for sellers in the UAE, Saudi Arabia and Egypt.</p></div>
+      <div><h5>Product</h5><a href="../tools/chrome-extension.html">Chrome extension</a><a href="../index.html#features">Features</a><a href="../index.html#how">How it works</a><a href="../pricing.html">Pricing</a></div>
+      <div><h5>Free tools</h5><a href="../tools/profit-calculator.html">Profit calculator</a><a href="../tools/qr-code-generator.html">QR code generator</a><a href="../tools/amazon-url-builder.html">Amazon URL builder</a><a href="../tools/listing-builder.html">Listing builder</a><a href="../fee-cheat-sheet.html">Fee cheat sheet (PDF)</a><a href="../niche-radar.html">Niche Radar (monthly)</a></div>
+      <div><h5>Company</h5><a href="../app/">Log in</a><a href="../faq.html">FAQ</a><a href="../contact.html">Contact us</a><a href="../privacy.html">Privacy policy</a></div>
+    </div>
+    <div class="mx-legal"><span>© 2026 Mirsad Analytics, a Uneekli AI company</span><span>Mirsad Analytics is an independent tool and is not affiliated with, endorsed by or sponsored by Amazon. Amazon is a trademark of Amazon.com, Inc. or its affiliates.</span></div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('[data-mark]').forEach(function (el) {
+    el.innerHTML = document.getElementById('waypoint-svg').innerHTML;
+  });
+
+  var TYPE_EXAMPLE = {
+    brand: function (domain) { return 'Example: https://www.' + domain + '/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-brand=FOREST+HEAL&field-keywords=sugar+scrub'; },
+    asin: function (domain) { return 'Example: https://www.' + domain + '/s?k=coffee+mugs&rh=p_asins:B08XXXXXXX'; },
+    secret: function (domain) { return 'Example: https://www.' + domain + '/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=coffee+mugs+B08XXXXXXX'; },
+    cart: function (domain) { return 'Example: https://www.' + domain + '/gp/aws/cart/add.html?ASIN.1=B08XXXXXXX&Quantity.1=1'; },
+    buytogether: function (domain) { return 'Example: https://www.' + domain + '/gp/aws/cart/add.html?ASIN.1=B08XXXXXXX&Quantity.1=1&ASIN.2=B08YYYYYYY&Quantity.2=1'; }
+  };
+
+  var marketplaceSel = document.getElementById('marketplace');
+  var typeList = document.getElementById('type-list');
+  var exampleNote = document.getElementById('example-note');
+  var note = document.getElementById('field-note');
+  var output = document.getElementById('output');
+  var outputUrl = document.getElementById('output-url');
+  var openLink = document.getElementById('open-link');
+  var currentType = 'brand';
+
+  function showFieldsFor(type) {
+    currentType = type;
+    document.querySelectorAll('.type-fields').forEach(function (el) { el.style.display = 'none'; });
+    document.getElementById('fields-' + type).style.display = 'block';
+    document.querySelectorAll('.type-item').forEach(function (el) {
+      el.classList.toggle('is-active', el.getAttribute('data-type') === type);
+    });
+    exampleNote.textContent = TYPE_EXAMPLE[type](marketplaceSel.value);
+    output.classList.remove('is-visible');
+    note.textContent = '';
+  }
+
+  typeList.addEventListener('click', function (e) {
+    var btn = e.target.closest('.type-item');
+    if (btn) showFieldsFor(btn.getAttribute('data-type'));
+  });
+  marketplaceSel.addEventListener('change', function () { showFieldsFor(currentType); });
+  showFieldsFor(currentType);
+
+  function enc(v) { return encodeURIComponent((v || '').trim()); }
+  function val(id) { return document.getElementById(id).value.trim(); }
+
+  function build() {
+    var domain = marketplaceSel.value;
+    var type = currentType;
+    var base = 'https://www.' + domain;
+
+    if (type === 'brand') {
+      var brand = val('brand-name'), keywords = val('brand-keywords');
+      if (!brand || !keywords) return { error: 'Brand name and keywords are both mandatory.' };
+      var url = base + '/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-brand=' + enc(brand) + '&field-keywords=' + enc(keywords);
+      var low = val('brand-low'), high = val('brand-high');
+      if (low) url += '&low-price=' + enc(low);
+      if (high) url += '&high-price=' + enc(high);
+      return { url: url };
+    }
+
+    if (type === 'asin') {
+      var asin = val('asin-code'), akw = val('asin-keywords');
+      if (!asin || !akw) return { error: 'ASIN and keywords are both mandatory.' };
+      return { url: base + '/s?k=' + enc(akw) + '&rh=p_asins:' + enc(asin) };
+    }
+
+    if (type === 'secret') {
+      var skw = val('secret-keywords'), sasin = val('secret-asin');
+      if (!skw || !sasin) return { error: 'Keywords and the ASIN to append are both mandatory.' };
+      return { url: base + '/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=' + enc(skw + ' ' + sasin) };
+    }
+
+    if (type === 'cart') {
+      var casin = val('cart-asin'), cqty = val('cart-qty') || '1';
+      if (!casin) return { error: 'ASIN is mandatory.' };
+      return { url: base + '/gp/aws/cart/add.html?ASIN.1=' + enc(casin) + '&Quantity.1=' + enc(cqty) };
+    }
+
+    if (type === 'buytogether') {
+      var rows = [
+        { asin: val('bt-asin1'), qty: val('bt-qty1') || '1', required: true },
+        { asin: val('bt-asin2'), qty: val('bt-qty2') || '1', required: true },
+        { asin: val('bt-asin3'), qty: val('bt-qty3') || '1', required: false }
+      ];
+      if (!rows[0].asin || !rows[1].asin) return { error: 'ASIN 1 and ASIN 2 are both mandatory, ASIN 3 is optional.' };
+      var parts = [];
+      var n = 1;
+      rows.forEach(function (r) {
+        if (r.asin) { parts.push('ASIN.' + n + '=' + enc(r.asin)); parts.push('Quantity.' + n + '=' + enc(r.qty)); n++; }
+      });
+      return { url: base + '/gp/aws/cart/add.html?' + parts.join('&') };
+    }
+  }
+
+  document.getElementById('create-btn').addEventListener('click', function () {
+    var result = build();
+    if (result.error) {
+      note.textContent = result.error;
+      output.classList.remove('is-visible');
+      return;
+    }
+    note.textContent = '';
+    outputUrl.textContent = result.url;
+    openLink.href = result.url;
+    output.classList.add('is-visible');
+    document.getElementById('mx-get').classList.add('is-on');
+  });
+
+  document.getElementById('copy-btn').addEventListener('click', function () {
+    var text = outputUrl.textContent;
+    if (!text) return;
+    navigator.clipboard.writeText(text).then(function () {
+      note.textContent = 'Copied to clipboard.';
+    }).catch(function () {
+      note.textContent = 'Could not copy automatically, select and copy the link manually.';
+    });
+  });
+</script>
+
+<script src="../js/site.js"></script>
+<div class="draft-flag">Draft preview</div>
+</body></html>
