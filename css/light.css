@@ -79,3 +79,6 @@ body.lt .hero .eyebrow{color:var(--blue)!important}
 body.lt .hero .lede{color:var(--ink2)!important}
 body.lt .mx-contact input,body.lt .mx-contact textarea,body.lt .mx-contact select{background:#fff!important;border:1.5px solid var(--line)!important;color:var(--ink)!important}
 body.lt .mx-contact input:focus,body.lt .mx-contact textarea:focus{border-color:var(--blue)!important;box-shadow:0 0 0 4px rgba(36,87,214,.12)!important}
+/* portal secondary buttons */
+body.lt .btn.ghost{background:#fff!important;color:var(--ink)!important;border:1.5px solid var(--line)!important}
+body.lt .btn.ghost:hover{border-color:var(--ink3)!important}
