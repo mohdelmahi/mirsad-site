@@ -158,7 +158,7 @@
     const { data: { session } } = await sb.auth.getSession();
     show($("#loading"), false);
     show($("#signout"), !!session && !recovering);
-    if (!session || recovering) { show($("#dash"), false); show($("#auth"), true); if (recovering) authView("reset"); return; }
+    if (!session || recovering) { show($("#dash"), false); show($("#auth"), true); if (recovering) authView("reset"); else if (location.hash === "#signup") authView("signup"); return; }
     show($("#auth"), false); show($("#dash"), true);
     let sub = await loadDash(session.user);
 
