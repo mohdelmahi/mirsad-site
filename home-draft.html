@@ -64,8 +64,9 @@ body.lt .mx-head .mx-burger{background:var(--mist);border-color:var(--line);colo
     radial-gradient(32% 40% at 56% 82%,rgba(14,156,156,.22),transparent 70%),
     radial-gradient(28% 36% at 8% 95%,rgba(23,157,91,.12),transparent 70%);
   filter:blur(12px)}
-.hero .w{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1.12fr;gap:56px;align-items:center}
-.hero h1{font-size:clamp(40px,5.4vw,68px)}
+.hero .w{position:relative;z-index:1;display:grid;grid-template-columns:.78fr 1.42fr;gap:48px;align-items:center;max-width:1280px}
+.hero h1{font-size:clamp(32px,3.3vw,46px);line-height:1.1}
+.hero .lead{font-size:18px}
 .hero .lead{margin:22px 0 32px}
 .hero .ctas{display:flex;flex-wrap:wrap;gap:12px}
 .markets{display:flex;align-items:center;gap:16px;margin-top:34px;color:var(--ink3);font-size:15px}
@@ -207,6 +208,65 @@ body.lt .mx-foot a:hover{color:var(--blue)!important}
 body.lt .mx-foot .mx-logo{color:var(--ink)!important}
 body.lt .mx-foot .mx-legal{border-top-color:var(--line)}
 
+
+/* mega menu */
+body.lt .mx-head .mx-dd{position:static}
+body.lt .mx-head .mx-ddm.mega{position:absolute;top:100%;left:50%;width:min(1180px,96vw);transform:translate(-50%,-6px);display:grid;grid-template-columns:repeat(4,1fr);gap:8px 28px;padding:28px 32px 30px;border-radius:0 0 22px 22px;background:#fff;border:1px solid var(--line);border-top:3px solid var(--blue);box-shadow:0 40px 70px -30px rgba(19,35,58,.35)}
+body.lt .mx-head .mx-dd.open .mx-ddm.mega{transform:translate(-50%,0)}
+@media(hover:hover){body.lt .mx-head .mx-dd:hover .mx-ddm.mega{transform:translate(-50%,0)}}
+body.lt .mega h6{margin:0 0 10px;font:700 13px/1.2 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+body.lt .mega .mi{display:block;padding:10px 12px;margin:0 -12px;border-radius:12px;text-decoration:none!important}
+body.lt .mega a.mi:hover{background:var(--mist)}
+body.lt .mega .mi b{display:flex;align-items:center;gap:8px;font-size:15.5px;font-weight:700;color:var(--ink)}
+body.lt .mega .mi small{display:block;margin-top:3px;font-size:14px;line-height:1.45;color:var(--ink2)}
+body.lt .mega .mi.off b{color:var(--ink2)}
+.bd{font-style:normal;font-size:11px;font-weight:700;letter-spacing:.02em;padding:2px 8px;border-radius:999px;border:1.5px solid}
+.bd-live{color:var(--green);border-color:var(--green);background:var(--green-t)}
+.bd-free{color:var(--blue);border-color:#9DB6EE;background:var(--blue-t)}
+.bd-soon{color:var(--ink3);border-color:var(--line);background:var(--mist)}
+.bd-monthly,.bd-pdf{color:var(--saffron-d);border-color:#F3C77E;background:var(--saffron-t)}
+@media(max-width:900px){body.lt .mx-head .mx-ddm.mega{position:static;width:auto;transform:none!important;display:none;grid-template-columns:1fr;padding:6px 0 10px;border:0;box-shadow:none;border-radius:0}body.lt .mx-head .mx-dd.open .mx-ddm.mega{display:grid}}
+
+/* step visuals */
+.step .sv{height:190px;border-radius:16px;overflow:hidden;margin-bottom:22px;background:var(--mist);border:1px solid var(--line);display:flex;align-items:center;justify-content:center}
+.step .sv img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.sv1{background:linear-gradient(160deg,#EAF0FD,#FFF3DF)!important}
+.amz{width:86%;background:#fff;border-radius:12px;padding:14px;box-shadow:0 16px 30px -18px rgba(19,35,58,.45)}
+.amz-logo{font:800 15px/1 var(--body);color:var(--ink);display:block;margin-bottom:10px}
+.amz-bar{display:flex;border:2px solid #F0A030;border-radius:8px;overflow:hidden}
+.amz-bar span{flex:1;padding:9px 12px;font-size:15px;color:var(--ink)}
+.amz-bar span::after{content:"";display:inline-block;width:2px;height:16px;background:var(--ink);vertical-align:middle;margin-left:2px;animation:blink 1s steps(1) infinite}
+.amz-bar i{font-style:normal;background:#F0A030;color:#3A2300;font-weight:700;font-size:14px;padding:9px 14px}
+@keyframes blink{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.amz-bar span::after{animation:none}}
+/* AI comparison */
+.ai-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;padding:6px;border-radius:16px;background:var(--mist);border:1px solid var(--line);width:fit-content;max-width:100%;margin:0 auto 40px}
+.ai-tabs button{font:inherit;font-weight:600;font-size:16px;color:var(--ink3);background:none;border:0;border-radius:11px;padding:12px 20px;cursor:pointer}
+.ai-tabs button[aria-selected=true]{background:#fff;color:var(--ink);box-shadow:0 6px 16px -8px rgba(19,35,58,.35)}
+.ai-heads,.ai-row{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.ai-heads{padding:0 40px 18px}
+.ai-heads b{font-family:var(--display);font-size:24px;letter-spacing:-.01em}
+.ai-heads span{color:var(--ink3);font-size:16px}
+.ai-heads .pill-ok{display:inline-flex;align-items:center;gap:6px;margin-left:8px;color:var(--blue);border:1.5px solid #9DB6EE;background:var(--blue-t);border-radius:999px;padding:4px 12px;font-weight:600;font-size:14px}
+.ai-body{background:var(--mist);border-radius:22px;padding:40px}
+.ai-row{display:none}.ai-row.on{display:grid}
+.ai-row p{margin:0 0 20px;font-size:18px;color:var(--ink2);line-height:1.55}
+.ai-tag{font-weight:700;color:var(--ink)!important;font-size:18px!important}
+.ai-tag span{display:inline-block;margin-right:10px;padding:3px 12px;border-radius:8px;color:#fff;font-size:15px;vertical-align:1px}
+.risk{background:#E5533D}.ben{background:var(--green)}
+/* gallery */
+.gal{display:grid;grid-template-columns:1.1fr 1fr 1fr;grid-template-rows:auto auto;gap:20px}
+.gt{position:relative;display:flex;flex-direction:column;border-radius:20px;overflow:hidden;background:#fff;border:1px solid var(--line);text-decoration:none!important;transition:box-shadow .2s}
+.gt:hover{box-shadow:0 24px 50px -28px rgba(19,35,58,.45)}
+.gt img{display:block;width:100%;height:220px;object-fit:cover;object-position:top}
+.gt-big{grid-row:span 2}.gt-big img{height:auto;flex:1;max-height:520px}
+.gt:nth-child(4){grid-column:2/4;grid-row:2;flex-direction:row}.gt:nth-child(4) img{width:46%;height:260px}
+.gt div{padding:18px 20px}
+.gt b{display:block;color:var(--ink);font-size:18px;font-family:var(--display);letter-spacing:-.01em}
+.gt span{color:var(--ink2);font-size:15px}
+@media(max-width:960px){.ai-heads{display:none}.ai-row.on{grid-template-columns:1fr;gap:10px}.ai-row>div:first-child::before{content:"General AI chats";display:block;font-weight:800;color:var(--ink);margin-bottom:6px}.ai-row>div:last-child::before{content:"Mirsad";display:block;font-weight:800;color:var(--blue);margin-bottom:6px}.ai-body{padding:24px}
+ .gal{grid-template-columns:1fr}.gt-big{grid-row:auto}.gt:nth-child(4){grid-column:auto;grid-row:auto;flex-direction:column}.gt:nth-child(4) img{width:100%}}
+
 .draft-flag{position:fixed;left:16px;bottom:16px;z-index:999;background:var(--saffron);color:#3A2300;font:700 13px/1 var(--body);padding:9px 12px;border-radius:10px;box-shadow:0 10px 30px -10px rgba(0,0,0,.4)}
 
 @media(max-width:960px){
@@ -229,8 +289,8 @@ body.lt .mx-foot .mx-legal{border-top-color:var(--line)}
     <a class="mx-logo" href="index.html"><img src="img/mirsad-logo.png" alt="Mirsad Analytics" width="34" height="34"><span>MIRSAD</span></a>
     <nav class="mx-links" aria-label="Main">
       <a href="index.html#features">Features</a>
-      <div class="mx-dd"><button class="mx-ddb" type="button" aria-expanded="false">Free tools <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 4.5l3 3 3-3"/></svg></button>
-        <div class="mx-ddm"><a href="tools/chrome-extension.html"><i><img src="img/mirsad-logo.png" alt=""></i><span><b>Chrome extension</b><small>Research panel on Amazon search pages</small></span></a><a href="tools/profit-calculator.html"><i><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></i><span><b>Profit calculator</b><small>Real referral and FBA fees per marketplace</small></span></a><a href="tools/qr-code-generator.html"><i><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg></i><span><b>QR code generator</b><small>Turn any Amazon link into a QR code</small></span></a><a href="tools/amazon-url-builder.html"><i><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.5.5l3-3a5 5 0 00-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 00-7.5-.5l-3 3a5 5 0 007 7l1.7-1.7"/></svg></i><span><b>Amazon URL builder</b><small>Brand, ASIN, search and add-to-cart links</small></span></a><a href="tools/listing-builder.html"><i><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h13"/></svg></i><span><b>Listing builder</b><small>Check copy against Amazon's character limits</small></span></a><a href="fee-cheat-sheet.html"><i><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></i><span><b>Fee cheat sheet (PDF)</b><small>Every Amazon fee for UAE, KSA and Egypt</small></span></a><a href="niche-radar.html"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12l6-6"/></svg></i><span><b>Niche Radar (monthly PDF)</b><small>20 niches worth checking on Amazon UAE</small></span></a><a class="mx-all" href="index.html#tools">See all tools →</a></div>
+      <div class="mx-dd"><button class="mx-ddb" type="button" aria-expanded="false">Tools <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 4.5l3 3 3-3"/></svg></button>
+        <div class="mx-ddm mega"><div class="col"><h6>Product research</h6><a class="mi" href="tools/chrome-extension.html"><b>Chrome extension <em class="bd bd-live">Live</em></b><small>Every product on an Amazon search page in one table, with fees and sales estimates</small></a><div class="mi off"><b>Product Database <em class="bd bd-soon">Soon</em></b><small>Filter Amazon UAE, KSA and Egypt products by price, profit, rank and sales</small></div><div class="mi off"><b>Product Tracker <em class="bd bd-soon">Soon</em></b><small>Follow sales, revenue and BSR of any product over time</small></div><div class="mi off"><b>Alerts <em class="bd bd-soon">Soon</em></b><small>Get told when a price, review count, stock or BSR changes</small></div></div><div class="col"><h6>Keywords and listings</h6><div class="mi off"><b>Keyword Scout <em class="bd bd-soon">Soon</em></b><small>Search volume and Reverse ASIN for the keywords competitors rank for</small></div><div class="mi off"><b>Keyword List <em class="bd bd-soon">Soon</em></b><small>Save the best keywords for each product, ready for your listing</small></div><a class="mi" href="tools/listing-builder.html"><b>Listing builder <em class="bd bd-free">Free</em></b><small>Write your title, bullets and description within Amazon's limits</small></a></div><div class="col"><h6>Free tools</h6><a class="mi" href="tools/profit-calculator.html"><b>Profit calculator <em class="bd bd-free">Free</em></b><small>Real referral and FBA fees for the UAE, Saudi Arabia and Egypt</small></a><a class="mi" href="tools/amazon-url-builder.html"><b>Amazon URL builder <em class="bd bd-free">Free</em></b><small>Brand, ASIN, keyword and add-to-cart links in Amazon's own format</small></a><a class="mi" href="tools/qr-code-generator.html"><b>QR code generator <em class="bd bd-free">Free</em></b><small>Turn any listing or store link into a QR code for packaging</small></a></div><div class="col"><h6>Reports and guides</h6><a class="mi" href="niche-radar.html"><b>Niche Radar <em class="bd bd-monthly">Monthly</em></b><small>20 niches worth checking on Amazon UAE, new every month</small></a><a class="mi" href="fee-cheat-sheet.html"><b>Fee cheat sheet <em class="bd bd-pdf">PDF</em></b><small>Every referral and FBA fee for the three marketplaces on one PDF</small></a><a class="mi" href="pricing.html"><b>Plans and pricing</b><small>Starter and Professional, monthly or yearly</small></a></div></div>
       </div>
       <a href="index.html#how">How it works</a>
       <a href="pricing.html">Pricing</a>
@@ -278,9 +338,9 @@ body.lt .mx-foot .mx-legal{border-top-color:var(--line)}
   <div class="w">
     <div class="head"><h2>From a search to a shortlist in three steps</h2><p>No spreadsheets, no copying and pasting, no 60 open tabs.</p></div>
     <div class="steps">
-      <div class="step"><div class="n">1</div><h3>Search on Amazon</h3><p>Open amazon.ae, amazon.sa or amazon.eg and search for any product idea, the way you normally would.</p></div>
-      <div class="step"><div class="n">2</div><h3>Click the Mirsad button</h3><p>Mirsad reads every product on the page and opens a full research table on top of Amazon.</p></div>
-      <div class="step"><div class="n">3</div><h3>Compare and export</h3><p>Sort and filter by profit, rank or reviews, then export the products worth chasing to Excel or Google Sheets.</p></div>
+      <div class="step"><div class="sv sv1"><div class="amz"><span class="amz-logo">amazon.ae</span><div class="amz-bar"><span>loaf pan</span><i>Search</i></div></div></div><div class="n">1</div><h3>Search on Amazon</h3><p>Open amazon.ae, amazon.sa or amazon.eg and search for any product idea, the way you normally would.</p></div>
+      <div class="step"><div class="sv"><img src="img/home-step2.jpg" alt="Mirsad table opening on top of the Amazon search page" loading="lazy"></div><div class="n">2</div><h3>Click the Mirsad button</h3><p>Mirsad reads every product on the page and opens a full research table on top of Amazon.</p></div>
+      <div class="step"><div class="sv"><img src="img/home-step3.jpg" alt="Download and Columns buttons with fee and BSR columns" loading="lazy"></div><div class="n">3</div><h3>Compare and export</h3><p>Sort and filter by profit, rank or reviews, then export the products worth chasing to Excel or Google Sheets.</p></div>
     </div>
   </div>
 </section>
@@ -319,6 +379,38 @@ body.lt .mx-foot .mx-legal{border-top-color:var(--line)}
           <a class="btn" href="niche-radar.html">See this month's niches</a></div>
         <div class="pic"><img src="img/radar-1.jpg" alt="Mirsad Niche Radar report, first page" loading="lazy"></div>
       </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="sec ai" id="ai">
+  <div class="w">
+    <div class="head center" style="text-align:center"><h2>Product research with AI: what actually matters</h2><p>ChatGPT and other AI chats are great for ideas. Here's where they fall short for Amazon in the Gulf and Egypt.</p></div>
+    <div class="ai-tabs" role="tablist" aria-label="AI comparison">
+      <button role="tab" aria-selected="true" data-a="0">Where the data comes from</button>
+      <button role="tab" aria-selected="false" data-a="1">Local fees and currency</button>
+      <button role="tab" aria-selected="false" data-a="2">Facts or guesses</button>
+      <button role="tab" aria-selected="false" data-a="3">What you can do with it</button>
+    </div>
+    <div class="ai-heads"><div><b>General AI chats</b> <span>ChatGPT, Gemini, DeepSeek</span></div><div><b>Mirsad</b> <span class="pill-ok">Live Amazon UAE, KSA and Egypt pages</span></div></div>
+    <div class="ai-body">
+      <div class="ai-row on"><div><p>Answers come from training data that can be months or years old, and very little of it is about amazon.ae, amazon.sa or amazon.eg.</p><p class="ai-tag"><span class="risk">Risk</span>Advice built on the US market and on prices that have since changed</p></div><div><p>Mirsad reads the Amazon page you're looking at, in the country you're selling in, at the moment you open it.</p><p class="ai-tag"><span class="ben">Benefit</span>Prices, ranks and reviews as they are today, not last year</p></div></div>
+      <div class="ai-row"><div><p>AI chats usually quote US FBA fees in dollars, or a rough percentage for every category.</p><p class="ai-tag"><span class="risk">Risk</span>Your profit looks better on paper than it will in Seller Central</p></div><div><p>Every product is checked against that country's own referral and FBA fees, in AED, SAR or EGP.</p><p class="ai-tag"><span class="ben">Benefit</span>A profit figure you can plan your stock order around</p></div></div>
+      <div class="ai-row"><div><p>When an AI chat doesn't know a product's sales, it often gives a confident number anyway.</p><p class="ai-tag"><span class="risk">Risk</span>Ordering stock based on figures nobody measured</p></div><div><p>Data read from the page is marked as real. Sales are estimated from BSR and always shown as a range.</p><p class="ai-tag"><span class="ben">Benefit</span>You always know which numbers are facts and which are estimates</p></div></div>
+      <div class="ai-row"><div><p>You get general tips like "find a niche with low competition", then still have to do the research by hand.</p><p class="ai-tag"><span class="risk">Risk</span>Hours of copying products into a spreadsheet</p></div><div><p>You get every product on the search in one sortable table, with profit per product, ready to export.</p><p class="ai-tag"><span class="ben">Benefit</span>A shortlist you can act on today</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec gallery" style="padding-top:0">
+  <div class="w">
+    <div class="head"><h2>Free tools you can use right now</h2><p>No account needed. They run in your browser.</p></div>
+    <div class="gal">
+      <a class="gt gt-big" href="fee-cheat-sheet.html"><img src="img/cheatsheet-1.jpg" alt="Amazon fees cheat sheet 2026, cover page" loading="lazy"><div><b>Fee cheat sheet 2026</b><span>Every referral and FBA fee for the UAE, Saudi Arabia and Egypt on one PDF</span></div></a>
+      <a class="gt" href="tools/amazon-url-builder.html"><img src="img/home-url.jpg" alt="Amazon URL builder making a brand link for amazon.ae" loading="lazy"><div><b>Amazon URL builder</b><span>Brand, ASIN, keyword and add-to-cart links</span></div></a>
+      <a class="gt" href="tools/qr-code-generator.html"><img src="img/home-qr.jpg" alt="QR code generated for an amazon.ae product link" loading="lazy"><div><b>QR code generator</b><span>For packaging, inserts and in-store displays</span></div></a>
+      <a class="gt gt-big" href="niche-radar.html"><img src="img/radar-2.jpg" alt="Niche Radar, niche scores page" loading="lazy"><div><b>Niche Radar</b><span>A scored list of 20 niches on Amazon UAE, every month</span></div></a>
     </div>
   </div>
 </section>
@@ -409,6 +501,11 @@ body.lt .mx-foot .mx-legal{border-top-color:var(--line)}
   tabs.forEach(function(t,i){t.addEventListener('click',function(){pick(i)});t.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key==='ArrowLeft'){var n=(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length;pick(n);tabs[n].focus()}})});
   var pb=[].slice.call(document.querySelectorAll('.toggle button'));
   pb.forEach(function(b){b.addEventListener('click',function(){pb.forEach(function(x){x.setAttribute('aria-pressed',x===b)});var k=b.dataset.p==='m'?'pm':'py';document.querySelectorAll('.plans [data-pm]').forEach(function(e){e.textContent=e.dataset[k]})})});
+})();
+
+(function(){
+  var b=[].slice.call(document.querySelectorAll('.ai-tabs button')), r=document.querySelectorAll('.ai-row');
+  b.forEach(function(x,i){x.addEventListener('click',function(){b.forEach(function(y,j){y.setAttribute('aria-selected',i===j)});r.forEach(function(z,j){z.classList.toggle('on',i===j)})})});
 })();
 </script>
 </body>
