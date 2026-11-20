@@ -5,10 +5,11 @@
 <link rel="icon" type="image/png" href="../img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../app/app.css?v=2">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../app/app.css?v=3">
+<link rel="stylesheet" href="../css/light.css">
 </head>
-<body>
+<body class="lt">
 <header class="top">
   <a class="logo" href="../index.html"><img src="../img/mirsad-logo.png" alt="" width="30" height="30"><span>MIRSAD ADMIN</span></a>
   <nav><a href="../app/">My account</a><button id="signout" class="link" hidden>Sign out</button></nav>
@@ -42,7 +43,7 @@
     <div class="card">
       <div class="row-between">
         <input id="q" type="search" placeholder="Search name, email, phone or country" style="flex:1;min-width:220px">
-        <select id="filter" style="font:inherit;color:var(--ink);background:#060A1C;border:1px solid var(--line);border-radius:10px;padding:11px">
+        <select id="filter" style="font:inherit;color:var(--ink);background:#FFFFFF;border:1px solid var(--line);border-radius:10px;padding:11px">
           <option value="">All</option><option value="paying">Paying</option><option value="free">Free</option><option value="problem">Payment problem</option><option value="cancelling">Cancelling</option>
         </select>
         <button class="btn ghost" id="export">Export CSV</button>
