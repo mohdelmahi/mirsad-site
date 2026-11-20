@@ -27,7 +27,7 @@ body.lt{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body
 body.lt a{color:var(--blue)}
 .w{max-width:1160px;margin:0 auto;padding:0 24px}
 h1,h2,h3{font-family:var(--display);color:var(--ink);font-weight:800;letter-spacing:-.025em;line-height:1.06;margin:0}
-h2{font-size:clamp(32px,4.2vw,50px)}
+h2{font-size:clamp(26px,2.5vw,34px);line-height:1.15}
 h3{font-size:22px;letter-spacing:-.015em;line-height:1.2}
 .lead{font-size:19px;color:var(--ink2);max-width:60ch}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:54px;padding:0 24px;border-radius:14px;font-weight:700;font-size:16px;text-decoration:none!important;transition:transform .15s,box-shadow .15s,background .15s}
@@ -55,7 +55,7 @@ body.lt .mx-head .mx-burger{background:var(--mist);border-color:var(--line);colo
 @media(max-width:900px){body.lt .mx-head .mx-links{background:#fff;border-bottom:1px solid var(--line)}body.lt .mx-head .mx-links>a,body.lt .mx-head .mx-ddb{border-bottom-color:var(--line)}}
 
 /* hero */
-.hero{position:relative;overflow:hidden;padding:76px 0 90px}
+.hero{position:relative;overflow:hidden;padding:56px 0 70px}
 .hero{background:linear-gradient(180deg,#F7FAFF 0%,#fff 55%)}
 .hero::before{content:"";position:absolute;inset:-20% -10% -30% -10%;z-index:0;
   background:
@@ -65,7 +65,7 @@ body.lt .mx-head .mx-burger{background:var(--mist);border-color:var(--line);colo
     radial-gradient(28% 36% at 8% 95%,rgba(23,157,91,.12),transparent 70%);
   filter:blur(12px)}
 .hero .w{position:relative;z-index:1;display:grid;grid-template-columns:.78fr 1.42fr;gap:48px;align-items:center;max-width:1280px}
-.hero h1{font-size:clamp(32px,3.3vw,46px);line-height:1.1}
+.hero h1{font-size:clamp(28px,2.8vw,40px);line-height:1.12}
 .hero .lead{font-size:18px}
 .hero .lead{margin:22px 0 32px}
 .hero .ctas{display:flex;flex-wrap:wrap;gap:12px}
@@ -101,21 +101,21 @@ body.lt .mx-head .mx-burger{background:var(--mist);border-color:var(--line);colo
 .facts span{font-size:15px;color:var(--ink2)}
 
 /* sections */
-.sec{padding:110px 0}
-.head{max-width:720px;margin-bottom:52px}
-.head p{color:var(--ink2);font-size:18px;margin:16px 0 0}
+.sec{padding:64px 0}
+.head{max-width:720px;margin-bottom:30px}
+.head p{color:var(--ink2);font-size:17px;margin:10px 0 0}
 .center{text-align:center;margin-left:auto;margin-right:auto}
 
 /* steps */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;counter-reset:s;border-top:2px solid var(--ink)}
 .step{padding:28px 28px 0 0}
 .step+.step{padding-left:28px;border-left:1px solid var(--line)}
-.step .n{font-family:var(--display);font-size:56px;font-weight:800;line-height:1;color:var(--blue);margin-bottom:18px}
+.step .n{font-family:var(--display);font-size:40px;font-weight:800;line-height:1;color:var(--blue);margin-bottom:10px}
 .step:nth-child(2) .n{color:var(--teal)}.step:nth-child(3) .n{color:var(--green)}
 .step p{color:var(--ink2);margin:10px 0 0;font-size:16px}
 
 /* tools tabs */
-.tools-sec{padding:0 0 110px}
+.tools-sec{padding:0 0 24px}
 .tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px}
 .tabs button{--c:var(--blue);--t:var(--blue-t);font:inherit;font-weight:600;font-size:16px;display:flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;border:1.5px solid var(--line);background:#fff;color:var(--ink2);cursor:pointer;transition:background .15s,border-color .15s,color .15s}
 .tabs button::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--c)}
@@ -127,7 +127,7 @@ body.lt .mx-head .mx-burger{background:var(--mist);border-color:var(--line);colo
 .pane.on{display:grid}
 @media (prefers-reduced-motion:no-preference){.pane.on{animation:fade .35s ease}}
 @keyframes fade{from{opacity:0}to{opacity:1}}
-.pane h3{font-size:clamp(26px,2.8vw,34px);line-height:1.12}
+.pane h3{font-size:clamp(22px,2vw,28px);line-height:1.15}
 .pane p{color:var(--ink2);margin:14px 0 18px}
 .pane ul{list-style:none;padding:0;margin:0 0 28px;display:grid;gap:9px}
 .pane li{position:relative;padding-left:26px;font-size:16px}
@@ -189,7 +189,7 @@ body.lt .mx-head .mx-burger{background:var(--mist);border-color:var(--line);colo
 .faq p{color:var(--ink2);margin:10px 0 0;max-width:68ch}
 
 /* final band (one dark moment) */
-.final{position:relative;overflow:hidden;background:var(--ink);color:#fff;border-radius:32px;padding:72px 48px;text-align:center}
+.final{position:relative;overflow:hidden;background:var(--ink);color:#fff;border-radius:32px;padding:56px 40px;text-align:center}
 .final::before{content:"";position:absolute;inset:auto -10% -60% -10%;height:100%;background:radial-gradient(40% 60% at 25% 50%,rgba(36,87,214,.55),transparent 70%),radial-gradient(35% 55% at 55% 60%,rgba(14,156,156,.45),transparent 70%),radial-gradient(35% 55% at 82% 45%,rgba(240,160,48,.5),transparent 70%);filter:blur(10px)}
 .final>*{position:relative}
 .final h2{color:#fff;max-width:18ch;margin:0 auto}
@@ -201,7 +201,7 @@ body.lt .final .mx-join button{background:var(--saffron);color:#3A2300;border:0}
 body.lt .final .mx-join-msg{color:#AFC0D6}
 
 /* footer, light */
-body.lt .mx-foot{border-top:1px solid var(--line);color:var(--ink3);font-family:var(--body);background:var(--mist);margin-top:110px}
+body.lt .mx-foot{border-top:1px solid var(--line);color:var(--ink3);font-family:var(--body);background:var(--mist);margin-top:64px}
 body.lt .mx-foot h5{color:var(--ink);letter-spacing:0;text-transform:none;font-size:15px}
 body.lt .mx-foot a{color:var(--ink2)!important}
 body.lt .mx-foot a:hover{color:var(--blue)!important}
@@ -228,8 +228,17 @@ body.lt .mega .mi.off b{color:var(--ink2)}
 @media(max-width:900px){body.lt .mx-head .mx-ddm.mega{position:static;width:auto;transform:none!important;display:none;grid-template-columns:1fr;padding:6px 0 10px;border:0;box-shadow:none;border-radius:0}body.lt .mx-head .mx-dd.open .mx-ddm.mega{display:grid}}
 
 /* step visuals */
-.step .sv{height:190px;border-radius:16px;overflow:hidden;margin-bottom:22px;background:var(--mist);border:1px solid var(--line);display:flex;align-items:center;justify-content:center}
-.step .sv img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.step .sv{height:220px;border-radius:16px;overflow:hidden;margin-bottom:22px;background:var(--mist);border:1px solid var(--line);display:flex;align-items:center;justify-content:center}
+.step .sv{padding:8px;background:#fff}
+.step .sv img{width:100%;height:100%;object-fit:contain;border-radius:8px;box-shadow:0 10px 24px -14px rgba(19,35,58,.45)}
+.sv3{background:linear-gradient(160deg,#E6F6EC,#EAF0FD)!important;padding:0!important}
+.exp{width:88%;background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 16px 30px -18px rgba(19,35,58,.45);font-size:13px}
+.exp-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.exp-h b{font-size:14px}
+.exp-b{background:var(--green);color:#fff;font-weight:700;border-radius:7px;padding:4px 10px;font-size:12px}
+.exp-r{display:flex;align-items:center;gap:8px;padding:4px 0;border-top:1px solid var(--line)}
+.exp-r i{width:14px;height:14px;border-radius:4px;background:var(--green);flex:none;position:relative}.exp-r i::after{content:"";position:absolute;left:4px;top:1px;width:4px;height:8px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.exp-r span{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink2)}.exp-r em{font-style:normal;font-weight:700;color:var(--green)}
+.exp-f{display:flex;gap:6px;margin-top:8px}.exp-f span{border:1px solid var(--line);border-radius:6px;padding:2px 8px;font-size:11.5px;color:var(--ink3)}
 .sv1{background:linear-gradient(160deg,#EAF0FD,#FFF3DF)!important}
 .amz{width:86%;background:#fff;border-radius:12px;padding:14px;box-shadow:0 16px 30px -18px rgba(19,35,58,.45)}
 .amz-logo{font:800 15px/1 var(--body);color:var(--ink);display:block;margin-bottom:10px}
@@ -240,20 +249,19 @@ body.lt .mega .mi.off b{color:var(--ink2)}
 @keyframes blink{50%{opacity:0}}
 @media (prefers-reduced-motion:reduce){.amz-bar span::after{animation:none}}
 /* AI comparison */
-.ai-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;padding:6px;border-radius:16px;background:var(--mist);border:1px solid var(--line);width:fit-content;max-width:100%;margin:0 auto 40px}
-.ai-tabs button{font:inherit;font-weight:600;font-size:16px;color:var(--ink3);background:none;border:0;border-radius:11px;padding:12px 20px;cursor:pointer}
-.ai-tabs button[aria-selected=true]{background:#fff;color:var(--ink);box-shadow:0 6px 16px -8px rgba(19,35,58,.35)}
-.ai-heads,.ai-row{display:grid;grid-template-columns:1fr 1fr;gap:56px}
-.ai-heads{padding:0 40px 18px}
-.ai-heads b{font-family:var(--display);font-size:24px;letter-spacing:-.01em}
-.ai-heads span{color:var(--ink3);font-size:16px}
-.ai-heads .pill-ok{display:inline-flex;align-items:center;gap:6px;margin-left:8px;color:var(--blue);border:1.5px solid #9DB6EE;background:var(--blue-t);border-radius:999px;padding:4px 12px;font-weight:600;font-size:14px}
-.ai-body{background:var(--mist);border-radius:22px;padding:40px}
-.ai-row{display:none}.ai-row.on{display:grid}
-.ai-row p{margin:0 0 20px;font-size:18px;color:var(--ink2);line-height:1.55}
-.ai-tag{font-weight:700;color:var(--ink)!important;font-size:18px!important}
-.ai-tag span{display:inline-block;margin-right:10px;padding:3px 12px;border-radius:8px;color:#fff;font-size:15px;vertical-align:1px}
-.risk{background:#E5533D}.ben{background:var(--green)}
+.ai-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:0 auto 20px}
+.ai-tabs button{font:inherit;font-weight:600;font-size:15px;color:var(--ink2);background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:10px 18px;cursor:pointer}
+.ai-tabs button[aria-selected=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.vs{background:var(--mist);border-radius:22px;padding:30px 36px 34px}
+.vs-h,.ai-row{display:grid;grid-template-columns:1fr 1fr;column-gap:48px}
+.vs-h{margin-bottom:14px}
+.vs-h span{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:-.01em}
+.vs-x{color:var(--ink3)}.vs-y{color:var(--blue)}
+.ai-row{display:none;row-gap:16px}.ai-row.on{display:grid}
+.ai-row p{margin:0;font-size:17px;color:var(--ink2);line-height:1.55}
+.ai-row .v1,.ai-row .v2{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--ink);font-size:16.5px;padding:12px 14px;border-radius:12px;background:#fff}
+.ai-row .v1 span,.ai-row .v2 span{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:13px}
+.ai-row .v1 span{background:#D9534F}.ai-row .v2 span{background:var(--green)}
 /* gallery */
 .gal{display:grid;grid-template-columns:1.1fr 1fr 1fr;grid-template-rows:auto auto;gap:20px}
 .gt{position:relative;display:flex;flex-direction:column;border-radius:20px;overflow:hidden;background:#fff;border:1px solid var(--line);text-decoration:none!important;transition:box-shadow .2s}
@@ -264,7 +272,7 @@ body.lt .mega .mi.off b{color:var(--ink2)}
 .gt div{padding:18px 20px}
 .gt b{display:block;color:var(--ink);font-size:18px;font-family:var(--display);letter-spacing:-.01em}
 .gt span{color:var(--ink2);font-size:15px}
-@media(max-width:960px){.ai-heads{display:none}.ai-row.on{grid-template-columns:1fr;gap:10px}.ai-row>div:first-child::before{content:"General AI chats";display:block;font-weight:800;color:var(--ink);margin-bottom:6px}.ai-row>div:last-child::before{content:"Mirsad";display:block;font-weight:800;color:var(--blue);margin-bottom:6px}.ai-body{padding:24px}
+@media(max-width:960px){.vs-h{display:none}.vs{padding:22px}.ai-row.on{grid-template-columns:1fr}.ai-row .t1{order:1}.ai-row .v1{order:2}.ai-row .t2{order:3;margin-top:10px}.ai-row .v2{order:4}.ai-row .t1::before{content:"AI chatbot: ";font-weight:700;color:var(--ink)}.ai-row .t2::before{content:"Mirsad: ";font-weight:700;color:var(--blue)}
  .gal{grid-template-columns:1fr}.gt-big{grid-row:auto}.gt:nth-child(4){grid-column:auto;grid-row:auto;flex-direction:column}.gt:nth-child(4) img{width:100%}}
 
 .draft-flag{position:fixed;left:16px;bottom:16px;z-index:999;background:var(--saffron);color:#3A2300;font:700 13px/1 var(--body);padding:9px 12px;border-radius:10px;box-shadow:0 10px 30px -10px rgba(0,0,0,.4)}
@@ -339,8 +347,12 @@ body.lt .mega .mi.off b{color:var(--ink2)}
     <div class="head"><h2>From a search to a shortlist in three steps</h2><p>No spreadsheets, no copying and pasting, no 60 open tabs.</p></div>
     <div class="steps">
       <div class="step"><div class="sv sv1"><div class="amz"><span class="amz-logo">amazon.ae</span><div class="amz-bar"><span>loaf pan</span><i>Search</i></div></div></div><div class="n">1</div><h3>Search on Amazon</h3><p>Open amazon.ae, amazon.sa or amazon.eg and search for any product idea, the way you normally would.</p></div>
-      <div class="step"><div class="sv"><img src="img/home-step2.jpg" alt="Mirsad table opening on top of the Amazon search page" loading="lazy"></div><div class="n">2</div><h3>Click the Mirsad button</h3><p>Mirsad reads every product on the page and opens a full research table on top of Amazon.</p></div>
-      <div class="step"><div class="sv"><img src="img/home-step3.jpg" alt="Download and Columns buttons with fee and BSR columns" loading="lazy"></div><div class="n">3</div><h3>Compare and export</h3><p>Sort and filter by profit, rank or reviews, then export the products worth chasing to Excel or Google Sheets.</p></div>
+      <div class="step"><div class="sv"><img src="img/mirsad-panel-real.jpg" alt="Mirsad table listing 54 loaf pans from amazon.ae" loading="lazy"></div><div class="n">2</div><h3>Click the Mirsad button</h3><p>Mirsad reads every product on the page and opens a full research table on top of Amazon.</p></div>
+      <div class="step"><div class="sv sv3"><div class="exp"><div class="exp-h"><b>3 products shortlisted</b><span class="exp-b">Download</span></div>
+<div class="exp-r"><i></i><span>Non-stick loaf pan, silicone handles</span><em>AED 75.79</em></div>
+<div class="exp-r"><i></i><span>Carbon steel loaf pan, 28 x 15 cm</span><em>AED 11.82</em></div>
+<div class="exp-r"><i></i><span>Silicone bread loaf pan, 23 x 13 cm</span><em>AED 75.79</em></div>
+<div class="exp-f"><span>Excel</span><span>Google Sheets</span><span>CSV</span></div></div></div><div class="n">3</div><h3>Compare and export</h3><p>Sort and filter by profit, rank or reviews, then export the products worth chasing to Excel or Google Sheets.</p></div>
     </div>
   </div>
 </section>
@@ -386,24 +398,44 @@ body.lt .mega .mi.off b{color:var(--ink2)}
 
 <section class="sec ai" id="ai">
   <div class="w">
-    <div class="head center" style="text-align:center"><h2>Product research with AI: what actually matters</h2><p>ChatGPT and other AI chats are great for ideas. Here's where they fall short for Amazon in the Gulf and Egypt.</p></div>
-    <div class="ai-tabs" role="tablist" aria-label="AI comparison">
-      <button role="tab" aria-selected="true" data-a="0">Where the data comes from</button>
-      <button role="tab" aria-selected="false" data-a="1">Local fees and currency</button>
-      <button role="tab" aria-selected="false" data-a="2">Facts or guesses</button>
-      <button role="tab" aria-selected="false" data-a="3">What you can do with it</button>
+    <div class="head center" style="text-align:center"><h2>Why not just ask ChatGPT?</h2><p>AI chatbots are handy for brainstorming. For choosing what to stock on Amazon in the Gulf and Egypt, here is how they compare with Mirsad.</p></div>
+    <div class="ai-tabs" role="tablist" aria-label="Compare AI chatbots and Mirsad">
+      <button role="tab" aria-selected="true">How fresh the numbers are</button>
+      <button role="tab" aria-selected="false">Fees in your country</button>
+      <button role="tab" aria-selected="false">Measured or made up</button>
+      <button role="tab" aria-selected="false">What you walk away with</button>
     </div>
-    <div class="ai-heads"><div><b>General AI chats</b> <span>ChatGPT, Gemini, DeepSeek</span></div><div><b>Mirsad</b> <span class="pill-ok">Live Amazon UAE, KSA and Egypt pages</span></div></div>
-    <div class="ai-body">
-      <div class="ai-row on"><div><p>Answers come from training data that can be months or years old, and very little of it is about amazon.ae, amazon.sa or amazon.eg.</p><p class="ai-tag"><span class="risk">Risk</span>Advice built on the US market and on prices that have since changed</p></div><div><p>Mirsad reads the Amazon page you're looking at, in the country you're selling in, at the moment you open it.</p><p class="ai-tag"><span class="ben">Benefit</span>Prices, ranks and reviews as they are today, not last year</p></div></div>
-      <div class="ai-row"><div><p>AI chats usually quote US FBA fees in dollars, or a rough percentage for every category.</p><p class="ai-tag"><span class="risk">Risk</span>Your profit looks better on paper than it will in Seller Central</p></div><div><p>Every product is checked against that country's own referral and FBA fees, in AED, SAR or EGP.</p><p class="ai-tag"><span class="ben">Benefit</span>A profit figure you can plan your stock order around</p></div></div>
-      <div class="ai-row"><div><p>When an AI chat doesn't know a product's sales, it often gives a confident number anyway.</p><p class="ai-tag"><span class="risk">Risk</span>Ordering stock based on figures nobody measured</p></div><div><p>Data read from the page is marked as real. Sales are estimated from BSR and always shown as a range.</p><p class="ai-tag"><span class="ben">Benefit</span>You always know which numbers are facts and which are estimates</p></div></div>
-      <div class="ai-row"><div><p>You get general tips like "find a niche with low competition", then still have to do the research by hand.</p><p class="ai-tag"><span class="risk">Risk</span>Hours of copying products into a spreadsheet</p></div><div><p>You get every product on the search in one sortable table, with profit per product, ready to export.</p><p class="ai-tag"><span class="ben">Benefit</span>A shortlist you can act on today</p></div></div>
+    <div class="vs">
+      <div class="vs-h"><span class="vs-x">If you ask an AI chatbot</span><span class="vs-y">If you open Mirsad on Amazon</span></div>
+      <div class="ai-row on">
+        <p class="t1">The chatbot answers from what it learned during training. That can be a year out of date, and it knows little about amazon.ae, amazon.sa or amazon.eg.</p>
+        <p class="t2">Mirsad looks at the search page in front of you, on the marketplace you sell in, the moment you click.</p>
+        <p class="v1"><span>✕</span>You may plan around US trends and old prices</p>
+        <p class="v2"><span>✓</span>Today's prices, ranks and reviews</p>
+      </div>
+      <div class="ai-row">
+        <p class="t1">Ask about fees and you'll usually get US FBA rates in dollars, or one rough percentage for everything.</p>
+        <p class="t2">Each product is costed with the referral and FBA fees of its own marketplace, in AED, SAR or EGP.</p>
+        <p class="v1"><span>✕</span>Margins that look healthier than they are</p>
+        <p class="v2"><span>✓</span>Profit you can base a stock order on</p>
+      </div>
+      <div class="ai-row">
+        <p class="t1">If it doesn't know how many units a product sells, a chatbot may still give you a precise-sounding figure.</p>
+        <p class="t2">What Mirsad reads from the page is marked as real. Sales are worked out from BSR and shown as a range.</p>
+        <p class="v1"><span>✕</span>Buying stock on numbers nobody checked</p>
+        <p class="v2"><span>✓</span>Facts and estimates are never mixed up</p>
+      </div>
+      <div class="ai-row">
+        <p class="t1">You get general advice such as "pick a niche with low competition", and the actual research is still on you.</p>
+        <p class="t2">You get the whole search page as one table, profit per product included, ready to sort and export.</p>
+        <p class="v1"><span>✕</span>An afternoon of copying products into a sheet</p>
+        <p class="v2"><span>✓</span>A shortlist ready the same day</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="sec gallery" style="padding-top:0">
+<section class="sec gallery" style="padding-top:8px">
   <div class="w">
     <div class="head"><h2>Free tools you can use right now</h2><p>No account needed. They run in your browser.</p></div>
     <div class="gal">
