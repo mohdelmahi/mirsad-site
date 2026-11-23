@@ -64,3 +64,5 @@ tr.hist td{background:var(--card2);white-space:normal}
 .est{display:block;max-width:560px;margin:6px 0 14px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#fff}.est b{font-size:14px}
 .est dl{display:grid;grid-template-columns:auto auto;gap:6px 18px;margin:10px 0}.est dt{color:var(--dim);font-size:14px}.est dd{margin:0;font-weight:700;text-align:right}
 .est .cost{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin:6px 0}.est .cost label{flex:1;min-width:220px;font-size:13px}.est .cost .btn{padding:10px 14px}
+.db-filters{display:flex;flex-wrap:wrap;gap:10px 12px;align-items:end}.db-filters label{font-size:13px}.db-filters .grow{flex:1;min-width:180px}.db-filters input[type=number]{width:110px}
+.db-table td:first-child{color:var(--faint);font-weight:700}

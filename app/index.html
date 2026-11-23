@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="app.css?v=6">
+<link rel="stylesheet" href="app.css?v=7">
 <link rel="stylesheet" href="../css/light.css?v=2">
 </head>
 <body class="lt">
@@ -95,10 +95,27 @@
       <p class="small muted">Prices, Best Sellers Rank and "bought in past month" are checked once a day. A new product shows its first numbers after the next daily check.</p>
     </div>
 
+    <div class="card" id="database">
+      <div class="row-between"><h2>Product Database</h2><span id="db-count" class="small muted"></span></div>
+      <form id="f-db" class="db-filters">
+        <label>Country<select name="mp"><option value="amazon.ae">UAE</option><option value="amazon.sa">Saudi Arabia</option><option value="amazon.eg">Egypt</option></select></label>
+        <label>Category<select name="cat"><option value="">All categories</option></select></label>
+        <label class="grow">Keyword<input name="q" placeholder="e.g. loaf pan, sponge" autocomplete="off"></label>
+        <label>Min price<input name="min" type="number" min="0" step="0.01" inputmode="decimal"></label>
+        <label>Max price<input name="max" type="number" min="0" step="0.01" inputmode="decimal"></label>
+        <label>Rating<select name="rating"><option value="">Any</option><option value="4">4★ and up</option><option value="4.5">4.5★ and up</option></select></label>
+        <label>Sort by<select name="sort"><option value="rank">Best-seller rank</option><option value="price_asc">Price: low to high</option><option value="price_desc">Price: high to low</option><option value="reviews">Most reviews</option><option value="reviews_asc">Fewest reviews</option><option value="rating">Highest rating</option></select></label>
+        <button class="btn" type="submit">Search</button>
+      </form>
+      <p id="db-msg" class="msg" role="status"></p>
+      <div id="db-list"></div>
+      <p class="small muted">Products come from Amazon's best-seller lists for each country, checked daily. Each search counts toward your monthly searches.</p>
+    </div>
+
     <div class="card">
       <h2>Your tools</h2>
       <div class="tools">
-        <div><b>Product Database</b><span>Amazon UAE, KSA and Egypt</span><em>Coming soon</em></div>
+        <div><b>Product Database</b><span>Amazon UAE, KSA and Egypt best sellers</span><a href="#database">Open →</a></div>
         <div><b>Product Tracker</b><span>Price, BSR and sales signals over time</span><a href="#tracker">Open →</a></div>
         <div><b>Alerts</b><span>Price, reviews, stock and BSR changes</span><em>Coming soon</em></div>
         <div><b>Keyword Scout</b><span>Search volume and Reverse ASIN</span><em>Coming soon</em></div>
@@ -130,5 +147,5 @@
 <script src="config.js?v=2"></script>
 <script src="../js/mirsad-fees.js?v=2"></script>
 <script src="../js/mirsad-sales.js?v=1"></script>
-<script src="app.js?v=6"></script>
+<script src="app.js?v=7"></script>
 </body></html>

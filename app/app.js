@@ -121,7 +121,9 @@
     form.elements.email.value = user.email;
     const plan = renderPlan(sub);
     renderUsage(usage, plan || "starter");
-    await loadTracker(user, sub && ["active", "trialing", "past_due"].includes(sub.status) ? plan : null);
+    const activePlan = sub && ["active", "trialing", "past_due"].includes(sub.status) ? plan : null;
+    await loadTracker(user, activePlan);
+    loadDbCats(activePlan);
     return sub;
   }
 
@@ -324,6 +326,87 @@
     f.q.value = "";
     msg(m, `Now tracking ${asin} in ${MP_NAME[mp]}.`, "ok");
     loadTracker(user, trPlan);
+  });
+
+  // ---------- product database ----------
+  let dbPlan = null;
+  async function latestDay(mp) {
+    const { data } = await sb.from("snapshots").select("captured_on").eq("marketplace", mp).not("list_rank", "is", null).order("captured_on", { ascending: false }).limit(1);
+    return data?.[0]?.captured_on || null;
+  }
+
+  async function loadDbCats(plan) {
+    dbPlan = plan;
+    const f = $("#f-db"), mp = f.elements.mp.value, sel = f.elements.cat;
+    if (!plan) { $("#db-list").innerHTML = '<p class="empty">Choose a plan to search the Product Database. Starter includes 50 searches a month, Professional is unlimited.</p>'; f.querySelector("button").disabled = true; return; }
+    const day = await latestDay(mp);
+    const { data } = day ? await sb.from("snapshots").select("list_name").eq("marketplace", mp).eq("captured_on", day).not("list_rank", "is", null) : { data: [] };
+    const cats = [...new Set((data || []).map((r) => r.list_name).filter(Boolean))].sort();
+    sel.innerHTML = '<option value="">All categories</option>' + cats.map((c) => `<option>${esc(c)}</option>`).join("");
+    $("#db-count").textContent = day ? `Updated ${fmtDate(day)}` : "";
+    if (!$("#db-list").innerHTML) $("#db-list").innerHTML = '<p class="empty">Pick a country and filters, then press Search.</p>';
+  }
+  $("#f-db").elements.mp.addEventListener("change", () => loadDbCats(dbPlan));
+
+  $("#f-db").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = e.target.elements, m = $("#db-msg"), btn = e.target.querySelector("button");
+    const min = f.min.value === "" ? null : Number(f.min.value), max = f.max.value === "" ? null : Number(f.max.value);
+    if (min != null && max != null && min > max) { msg(m, "Min price is higher than max price.", "err"); return; }
+    btn.disabled = true; msg(m, "Searching…");
+    const { data: quota, error: qe } = await sb.rpc("use_search");
+    if (qe || !quota) { btn.disabled = false; msg(m, "Couldn't search right now. Please try again.", "err"); return; }
+    if (!quota.ok) { btn.disabled = false; msg(m, `You've used all ${quota.limit} searches for this month. Upgrade to Professional for unlimited searches.`, "err"); return; }
+    const mp = f.mp.value, day = await latestDay(mp);
+    if (!day) { btn.disabled = false; msg(m, "No products saved for this country yet.", "err"); return; }
+    let q = sb.from("snapshots").select("asin,list_rank,list_name,price,currency,rating,reviews,bsr,bought_past_month,bought_min,products(title,image,brand)")
+      .eq("marketplace", mp).eq("captured_on", day).not("list_rank", "is", null);
+    if (f.cat.value) q = q.eq("list_name", f.cat.value);
+    if (min != null) q = q.gte("price", min);
+    if (max != null) q = q.lte("price", max);
+    if (f.rating.value) q = q.gte("rating", Number(f.rating.value));
+    const [{ data: rows, error }, { data: tr }] = await Promise.all([q.limit(1000), sb.from("tracked").select("marketplace,asin")]);
+    btn.disabled = false;
+    if (error) { msg(m, "Couldn't load products. Please try again.", "err"); return; }
+    const words = f.q.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    let list = (rows || []).filter((r) => !words.length || words.every((w) => ((r.products?.title || "") + " " + (r.products?.brand || "")).toLowerCase().includes(w)));
+    const by = {
+      rank: (a, b) => (a.list_name || "").localeCompare(b.list_name || "") || a.list_rank - b.list_rank,
+      price_asc: (a, b) => (a.price ?? 1e12) - (b.price ?? 1e12),
+      price_desc: (a, b) => (b.price ?? -1) - (a.price ?? -1),
+      reviews: (a, b) => (b.reviews ?? -1) - (a.reviews ?? -1),
+      reviews_asc: (a, b) => (a.reviews ?? 1e12) - (b.reviews ?? 1e12),
+      rating: (a, b) => (b.rating ?? -1) - (a.rating ?? -1) || (b.reviews ?? 0) - (a.reviews ?? 0),
+    }[f.sort.value];
+    list.sort(by);
+    const mine = new Set((tr || []).map((t) => t.marketplace + "|" + t.asin));
+    $("#u-searches").textContent = quota.limit >= 1000000 ? `${quota.used} (unlimited)` : `${quota.used} of ${quota.limit}`;
+    $("#b-searches").style.width = quota.limit >= 1000000 ? "4%" : Math.min(100, (quota.used / quota.limit) * 100) + "%";
+    msg(m, `${list.length} product${list.length === 1 ? "" : "s"} found.${quota.limit < 1000000 ? ` ${quota.limit - quota.used} searches left this month.` : ""}`, "ok");
+    if (!list.length) { $("#db-list").innerHTML = '<p class="empty">No products match. Try fewer filters or another category.</p>'; return; }
+    $("#db-list").innerHTML = `<div class="tablewrap"><table class="tr-table db-table"><thead><tr><th>#</th><th>Product</th><th>Category</th><th>Price</th><th>Rating</th><th>Est. sales / month</th><th></th></tr></thead><tbody>${
+      list.slice(0, 200).map((r) => {
+        const p = r.products || {}, k = mp + "|" + r.asin;
+        const name = p.title ? esc(p.title.length > 70 ? p.title.slice(0, 70) + "…" : p.title) : r.asin;
+        return `<tr><td>${r.list_rank}</td>
+          <td class="prod">${p.image ? `<img src="${esc(p.image)}" alt="" loading="lazy">` : '<span class="noimg"></span>'}<div><a href="https://www.${mp}/dp/${r.asin}" target="_blank" rel="noopener">${name}</a><small class="muted">${p.brand ? esc(p.brand) + " · " : ""}${r.asin}</small></div></td>
+          <td>${esc(r.list_name || "—")}</td>
+          <td>${r.price != null ? esc(r.currency || "") + "&nbsp;" + Number(r.price).toFixed(2) : "—"}</td>
+          <td>${r.rating ? r.rating + " ★<small class=\"muted\">" + num(r.reviews) + " reviews</small>" : "—"}</td>
+          <td>${salesCell(MirsadSales.units(r))}</td>
+          <td class="acts">${mine.has(k) ? '<span class="small muted">Tracking</span>' : `<button class="link" data-track="${esc(k)}">Track</button>`}</td></tr>`;
+      }).join("")
+    }</tbody></table></div>${list.length > 200 ? '<p class="small muted">Showing the first 200. Add filters to narrow it down.</p>' : ""}`;
+    $("#db-list").querySelectorAll("[data-track]").forEach((b) => b.addEventListener("click", async () => {
+      const [tmp, asin] = b.dataset.track.split("|");
+      b.disabled = true;
+      const { data: { user } } = await sb.auth.getUser();
+      const { error: te } = await sb.from("tracked").insert({ user_id: user.id, marketplace: tmp, asin });
+      if (te) { b.disabled = false; msg(m, /allows/.test(te.message) ? te.message : te.code === "23505" ? "Already tracking it." : "Couldn't add it. Please try again.", "err"); return; }
+      b.outerHTML = '<span class="small muted">Tracking</span>';
+      msg(m, `Now tracking ${asin}. See it in Product Tracker above.`, "ok");
+      loadTracker(user, trPlan);
+    }));
   });
 
   // ---------- routing ----------
