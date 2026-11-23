@@ -202,10 +202,43 @@
       <polyline points="${line}"/>${dots}</svg></div>`;
   }
 
+
+  const r0 = (n) => Math.round(n).toLocaleString("en");
+  const money2 = (n, cur) => (cur ? cur + "\u00a0" : "") + Number(n).toLocaleString("en", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const range = (lo, hi, f) => (f(lo) === f(hi) ? f(lo) : f(lo) + "\u2013" + f(hi));
+
+  function salesCell(u) {
+    if (!u) return "—";
+    return u.basis === "badge" ? `${r0(u.low)}\u2013${r0(u.high)}<small class="muted">Amazon badge</small>` : `Under 50<small class="muted">no badge</small>`;
+  }
+
+  function estBox(t, p, last) {
+    const prod = { marketplace: t.marketplace, category: p.category, weight: p.weight, dimensions: p.dimensions };
+    const e = MirsadSales.estimate(prod, last, t.unit_cost);
+    const k = esc(t.marketplace + "|" + t.asin);
+    if (!e) return `<div class="est"><b>Sales and profit</b><p class="small muted">No sales signal for this product yet. It appears once Amazon shows a "bought in past month" badge or after the next daily check.</p></div>`;
+    const cur = e.currency || "", u = e.units;
+    const basis = u.basis === "badge"
+      ? `Based on Amazon's "${esc(last.bought_past_month || u.low + "+ bought in past month")}" badge.`
+      : `No "bought in past month" badge on Amazon, which means under 50 sales a month.`;
+    const rows = [
+      ["Sales per month", range(u.low, u.high, r0) + " units"],
+      ["Sales per day", range(e.perDay.low, e.perDay.high, (n) => (n < 10 ? n.toFixed(1) : r0(n))) + " units"],
+      e.revenue ? ["Revenue per month", range(e.revenue.low, e.revenue.high, (n) => cur + "\u00a0" + r0(n))] : null,
+      e.feesPerUnit != null ? ["Amazon fees per unit (FBA)", money2(e.feesPerUnit, cur)] : null,
+      e.profitPerUnit != null ? ["Profit per unit", money2(e.profitPerUnit, cur)] : null,
+      e.profit ? ["Profit per month", range(e.profit.low, e.profit.high, (n) => cur + "\u00a0" + r0(n))] : null,
+    ].filter(Boolean);
+    return `<div class="est"><b>Sales and profit (estimate)</b>
+      <dl>${rows.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join("")}</dl>
+      <form class="cost" data-cost="${k}"><label>Your cost per unit (${esc(cur || "local currency")}), including shipping to Amazon<input name="c" type="number" min="0" step="0.01" inputmode="decimal" value="${t.unit_cost ?? ""}" placeholder="e.g. 4.50"></label><button class="btn ghost" type="submit">${e.profit ? "Update" : "Show profit"}</button></form>
+      <p class="small muted">${basis} ${e.feeNote ? esc(e.feeNote) + " " : ""}Fees exclude VAT and storage. These are estimates, not Amazon's sales figures.</p></div>`;
+  }
+
   async function loadTracker(user, plan) {
     trPlan = plan;
     const box = $("#tr-list");
-    const { data: tracked, error } = await sb.from("tracked").select("marketplace,asin,created_at").eq("user_id", user.id).order("created_at");
+    const { data: tracked, error } = await sb.from("tracked").select("marketplace,asin,created_at,unit_cost").eq("user_id", user.id).order("created_at");
     if (error) { box.innerHTML = '<p class="msg err">Couldn\'t load your tracked products. Please refresh.</p>'; return; }
     const lim = (MIRSAD.limits[plan] || { tracked: 0 }).tracked;
     $("#tr-count").textContent = plan ? (lim === Infinity ? `${tracked.length} tracked` : `${tracked.length} of ${lim} tracked`) : "";
@@ -220,7 +253,7 @@
     const asins = [...new Set(tracked.map((t) => t.asin))];
     const since = new Date(Date.now() - 90 * 864e5).toISOString().slice(0, 10);
     const [{ data: prods }, { data: snaps }] = await Promise.all([
-      sb.from("products").select("marketplace,asin,title,image").in("asin", asins),
+      sb.from("products").select("marketplace,asin,title,image,category,weight,dimensions").in("asin", asins),
       sb.from("snapshots").select("marketplace,asin,captured_on,price,currency,bsr,bsr_category,rating,reviews,bought_past_month,bought_min").in("asin", asins).gte("captured_on", since).order("captured_on"),
     ]);
     const key = (r) => r.marketplace + "|" + r.asin;
@@ -228,7 +261,7 @@
     (prods || []).forEach((p) => { P[key(p)] = p; });
     (snaps || []).forEach((s) => { (S[key(s)] ||= []).push(s); });
 
-    box.innerHTML = `<div class="tablewrap"><table class="tr-table"><thead><tr><th>Product</th><th>Price</th><th>BSR</th><th>BSR trend</th><th>Bought last month</th><th>Rating</th><th></th></tr></thead><tbody>${
+    box.innerHTML = `<div class="tablewrap"><table class="tr-table"><thead><tr><th>Product</th><th>Price</th><th>BSR</th><th>BSR trend</th><th>Est. sales / month</th><th>Rating</th><th></th></tr></thead><tbody>${
       tracked.map((t) => {
         const k = key(t), p = P[k] || {}, h = S[k] || [], last = h[h.length - 1], prev = h[h.length - 2];
         const link = `https://www.${t.marketplace}/dp/${t.asin}`;
@@ -238,12 +271,12 @@
           ? `<td>${last.price != null ? esc(last.currency || "") + "&nbsp;" + Number(last.price).toFixed(2) : "—"}${change(last.price, prev?.price, true)}</td>
              <td>${last.bsr ? "#" + num(last.bsr) : "—"}${change(last.bsr, prev?.bsr, true)}${last.bsr_category ? `<small class="muted cat">${esc(last.bsr_category)}</small>` : ""}</td>
              <td>${spark(h.map((r) => r.bsr), true)}</td>
-             <td>${esc((last.bought_past_month || "—").replace(/\s*bought in past month/i, ""))}</td>
+             <td>${salesCell(MirsadSales.units(last))}</td>
              <td>${last.rating ? last.rating + " ★ (" + num(last.reviews) + ")" : "—"}</td>`
           : `<td colspan="5" class="muted small">Waiting for the first daily check</td>`;
         return `<tr data-k="${esc(k)}"><td class="prod">${img}<div><a href="${link}" target="_blank" rel="noopener">${name}</a><small class="muted">${MP_NAME[t.marketplace]} · ${t.asin}${h.length ? ` · ${h.length} day${h.length > 1 ? "s" : ""} of data` : ""}</small></div></td>${cells}
           <td class="acts"><button class="link" data-hist="${esc(k)}"${h.length ? "" : " disabled"}>History</button><button class="link danger" data-rm="${esc(k)}">Remove</button></td></tr>
-          <tr class="hist" data-for="${esc(k)}" hidden><td colspan="7">${h.length ? chart(h, "bsr", "Best Sellers Rank (higher on chart is better)", true) + chart(h, "price", "Price", false) : ""}</td></tr>`;
+          <tr class="hist" data-for="${esc(k)}" hidden><td colspan="7">${h.length ? estBox(t, p, last) + chart(h, "bsr", "Best Sellers Rank (higher on chart is better)", true) + chart(h, "price", "Price", false) : ""}</td></tr>`;
       }).join("")
     }</tbody></table></div>`;
 
@@ -259,6 +292,17 @@
       msg($("#track-msg"), e ? "Couldn't remove it. Please try again." : `Stopped tracking ${asin}.`, e ? "err" : "ok");
       loadTracker(user, trPlan);
     }));
+    box.querySelectorAll("form[data-cost]").forEach((f) => f.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      const [mp, asin] = f.dataset.cost.split("|"), v = f.elements.c.value.trim();
+      const cost = v === "" ? null : Number(v);
+      if (cost != null && (isNaN(cost) || cost < 0)) { msg($("#track-msg"), "Enter your cost as a number, like 4.50.", "err"); return; }
+      const { error: e2 } = await sb.from("tracked").update({ unit_cost: cost }).eq("user_id", user.id).eq("marketplace", mp).eq("asin", asin);
+      if (e2) { msg($("#track-msg"), "Couldn't save your cost. Please try again.", "err"); return; }
+      trOpen = f.dataset.cost;
+      await loadTracker(user, trPlan);
+    }));
+    if (trOpen) { const b = box.querySelector(`[data-hist="${trOpen}"]`); trOpen = null; if (b && !b.disabled) b.click(); }
   }
 
   $("#f-track").addEventListener("submit", async (e) => {
