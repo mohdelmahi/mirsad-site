@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="app.css?v=7">
+<link rel="stylesheet" href="app.css?v=8">
 <link rel="stylesheet" href="../css/light.css?v=2">
 </head>
 <body class="lt">
@@ -112,14 +112,26 @@
       <p class="small muted">Products come from Amazon's best-seller lists for each country, checked daily. Each search counts toward your monthly searches.</p>
     </div>
 
+    <div class="card" id="keywords">
+      <div class="row-between"><h2>Keyword List</h2><span id="kw-count" class="small muted"></span></div>
+      <form id="f-kw" class="db-filters">
+        <label>Keywords for<select name="for"></select></label>
+        <label class="grow">Add keywords<input name="words" placeholder="One or more, separated by commas" autocomplete="off"></label>
+        <button class="btn" type="submit">Add</button>
+      </form>
+      <p id="kw-msg" class="msg" role="status"></p>
+      <div id="kw-list"></div>
+      <p class="small muted">Save the keywords you want in each listing. "Copy for search terms" gives you one line, ready for Amazon's search terms field (249 bytes). Search volumes will show here when Keyword Scout launches.</p>
+    </div>
+
     <div class="card">
       <h2>Your tools</h2>
       <div class="tools">
         <div><b>Product Database</b><span>Amazon UAE, KSA and Egypt best sellers</span><a href="#database">Open →</a></div>
         <div><b>Product Tracker</b><span>Price, BSR and sales signals over time</span><a href="#tracker">Open →</a></div>
-        <div><b>Alerts</b><span>Price, reviews, stock and BSR changes</span><em>Coming soon</em></div>
+        <div><b>Alerts</b><span>Price, reviews, stock and BSR changes</span><a href="#tracker">Set in Product Tracker →</a></div>
         <div><b>Keyword Scout</b><span>Search volume and Reverse ASIN</span><em>Coming soon</em></div>
-        <div><b>Keyword List</b><span>Save keywords for each product</span><em>Coming soon</em></div>
+        <div><b>Keyword List</b><span>Save keywords for each product</span><a href="#keywords">Open →</a></div>
         <div><b>Profit Calculator</b><span>Amazon fees, profit and margin for UAE, KSA and Egypt</span><a href="../tools/profit-calculator.html">Open →</a></div>
         <div><b>Listing Builder</b><span>Write and improve your listing</span><a href="../tools/listing-builder.html">Open →</a></div>
         <div><b>Chrome extension</b><span>Research panel on Amazon search pages</span><a href="https://chromewebstore.google.com/detail/lmcdmjciemdaafndgaojaeoffjackdka" target="_blank" rel="noopener">Open →</a></div>
@@ -147,5 +159,5 @@
 <script src="config.js?v=2"></script>
 <script src="../js/mirsad-fees.js?v=2"></script>
 <script src="../js/mirsad-sales.js?v=1"></script>
-<script src="app.js?v=7"></script>
+<script src="app.js?v=8"></script>
 </body></html>

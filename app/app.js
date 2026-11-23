@@ -160,7 +160,7 @@
   const MP_NAME = { "amazon.ae": "UAE", "amazon.sa": "KSA", "amazon.eg": "Egypt" };
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const num = (n) => (n == null ? "—" : Number(n).toLocaleString("en"));
-  let trPlan = null, trOpen = null;
+  let trPlan = null, trOpen = null, trSaved = null, trList = [];
 
   function parseProduct(q, fallbackMp) {
     q = q.trim();
@@ -214,6 +214,17 @@
     return u.basis === "badge" ? `${r0(u.low)}\u2013${r0(u.high)}<small class="muted">Amazon badge</small>` : `Under 50<small class="muted">no badge</small>`;
   }
 
+  const alertsOn = (t) => t.alert_price_pct != null || t.alert_bsr_pct != null || t.alert_reviews || t.alert_stock;
+  function alertsForm(t) {
+    const k = esc(t.marketplace + "|" + t.asin);
+    return `<form class="alerts est" data-alerts="${k}"><b>Email alerts</b><p class="small muted">We'll email you once a day if any of these happen.</p>
+      <label class="chk"><input type="checkbox" name="price"${t.alert_price_pct != null ? " checked" : ""}> Price changes by <input name="price_pct" type="number" min="1" step="1" value="${t.alert_price_pct ?? 5}">% or more</label>
+      <label class="chk"><input type="checkbox" name="bsr"${t.alert_bsr_pct != null ? " checked" : ""}> Best Sellers Rank changes by <input name="bsr_pct" type="number" min="1" step="1" value="${t.alert_bsr_pct ?? 20}">% or more</label>
+      <label class="chk"><input type="checkbox" name="reviews"${t.alert_reviews ? " checked" : ""}> It gets new reviews</label>
+      <label class="chk"><input type="checkbox" name="stock"${t.alert_stock ? " checked" : ""}> It goes out of stock or comes back</label>
+      <button class="btn ghost" type="submit">Save alerts</button> <span class="msg inline" role="status"></span></form>`;
+  }
+
   function estBox(t, p, last) {
     const prod = { marketplace: t.marketplace, category: p.category, weight: p.weight, dimensions: p.dimensions };
     const e = MirsadSales.estimate(prod, last, t.unit_cost);
@@ -240,12 +251,13 @@
   async function loadTracker(user, plan) {
     trPlan = plan;
     const box = $("#tr-list");
-    const { data: tracked, error } = await sb.from("tracked").select("marketplace,asin,created_at,unit_cost").eq("user_id", user.id).order("created_at");
+    const { data: tracked, error } = await sb.from("tracked").select("marketplace,asin,created_at,unit_cost,alert_price_pct,alert_bsr_pct,alert_reviews,alert_stock").eq("user_id", user.id).order("created_at");
     if (error) { box.innerHTML = '<p class="msg err">Couldn\'t load your tracked products. Please refresh.</p>'; return; }
     const lim = (MIRSAD.limits[plan] || { tracked: 0 }).tracked;
     $("#tr-count").textContent = plan ? (lim === Infinity ? `${tracked.length} tracked` : `${tracked.length} of ${lim} tracked`) : "";
     $("#u-tracked").textContent = lim === Infinity ? `${tracked.length} (unlimited)` : `${tracked.length} of ${lim || 0}`;
     $("#b-tracked").style.width = lim === Infinity ? "4%" : lim ? Math.min(100, (tracked.length / lim) * 100) + "%" : "0%";
+    trList = tracked; fillKwFor();
     if (!tracked.length) {
       box.innerHTML = plan
         ? '<p class="empty">You aren\'t tracking anything yet. Paste an Amazon link or ASIN above to start.</p>'
@@ -276,15 +288,15 @@
              <td>${salesCell(MirsadSales.units(last))}</td>
              <td>${last.rating ? last.rating + " ★ (" + num(last.reviews) + ")" : "—"}</td>`
           : `<td colspan="5" class="muted small">Waiting for the first daily check</td>`;
-        return `<tr data-k="${esc(k)}"><td class="prod">${img}<div><a href="${link}" target="_blank" rel="noopener">${name}</a><small class="muted">${MP_NAME[t.marketplace]} · ${t.asin}${h.length ? ` · ${h.length} day${h.length > 1 ? "s" : ""} of data` : ""}</small></div></td>${cells}
-          <td class="acts"><button class="link" data-hist="${esc(k)}"${h.length ? "" : " disabled"}>History</button><button class="link danger" data-rm="${esc(k)}">Remove</button></td></tr>
-          <tr class="hist" data-for="${esc(k)}" hidden><td colspan="7">${h.length ? estBox(t, p, last) + chart(h, "bsr", "Best Sellers Rank (higher on chart is better)", true) + chart(h, "price", "Price", false) : ""}</td></tr>`;
+        return `<tr data-k="${esc(k)}"><td class="prod">${img}<div><a href="${link}" target="_blank" rel="noopener">${name}</a><small class="muted">${MP_NAME[t.marketplace]} · ${t.asin}${h.length ? ` · ${h.length} day${h.length > 1 ? "s" : ""} of data` : ""}${alertsOn(t) ? ' · <span class="bell">Alerts on</span>' : ""}</small></div></td>${cells}
+          <td class="acts"><button class="link" data-hist="${esc(k)}">Details</button><button class="link danger" data-rm="${esc(k)}">Remove</button></td></tr>
+          <tr class="hist" data-for="${esc(k)}" hidden><td colspan="7"><div class="detail-top">${h.length ? estBox(t, p, last) : ""}${alertsForm(t)}</div>${h.length ? chart(h, "bsr", "Best Sellers Rank (higher on chart is better)", true) + chart(h, "price", "Price", false) : ""}</td></tr>`;
       }).join("")
     }</tbody></table></div>`;
 
     box.querySelectorAll("[data-hist]").forEach((b) => b.addEventListener("click", () => {
       const row = box.querySelector(`tr.hist[data-for="${b.dataset.hist}"]`);
-      row.hidden = !row.hidden; b.textContent = row.hidden ? "History" : "Hide";
+      row.hidden = !row.hidden; b.textContent = row.hidden ? "Details" : "Hide";
     }));
     box.querySelectorAll("[data-rm]").forEach((b) => b.addEventListener("click", async () => {
       const [mp, asin] = b.dataset.rm.split("|");
@@ -304,7 +316,19 @@
       trOpen = f.dataset.cost;
       await loadTracker(user, trPlan);
     }));
+    box.querySelectorAll("form[data-alerts]").forEach((f) => f.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      const [mp, asin] = f.dataset.alerts.split("|"), el = f.elements;
+      const pp = Number(el.price_pct.value), bp = Number(el.bsr_pct.value);
+      if ((el.price.checked && !(pp > 0)) || (el.bsr.checked && !(bp > 0))) { msg(f.querySelector(".msg"), "Enter a percentage above 0.", "err"); return; }
+      const patch = { alert_price_pct: el.price.checked ? pp : null, alert_bsr_pct: el.bsr.checked ? bp : null, alert_reviews: el.reviews.checked, alert_stock: el.stock.checked };
+      const { error: e3 } = await sb.from("tracked").update(patch).eq("user_id", user.id).eq("marketplace", mp).eq("asin", asin);
+      if (e3) { msg(f.querySelector(".msg"), "Couldn't save your alerts. Please try again.", "err"); return; }
+      trOpen = f.dataset.alerts; trSaved = "Alerts saved.";
+      await loadTracker(user, trPlan);
+    }));
     if (trOpen) { const b = box.querySelector(`[data-hist="${trOpen}"]`); trOpen = null; if (b && !b.disabled) b.click(); }
+    if (trSaved) { const sm = box.querySelector("form[data-alerts] .msg"); const open = box.querySelector("tr.hist:not([hidden]) form[data-alerts] .msg"); msg(open || sm, trSaved, "ok"); trSaved = null; }
   }
 
   $("#f-track").addEventListener("submit", async (e) => {
@@ -330,20 +354,13 @@
 
   // ---------- product database ----------
   let dbPlan = null;
-  async function latestDay(mp) {
-    const { data } = await sb.from("snapshots").select("captured_on").eq("marketplace", mp).not("list_rank", "is", null).order("captured_on", { ascending: false }).limit(1);
-    return data?.[0]?.captured_on || null;
-  }
-
   async function loadDbCats(plan) {
     dbPlan = plan;
-    const f = $("#f-db"), mp = f.elements.mp.value, sel = f.elements.cat;
+    const f = $("#f-db"), sel = f.elements.cat;
     if (!plan) { $("#db-list").innerHTML = '<p class="empty">Choose a plan to search the Product Database. Starter includes 50 searches a month, Professional is unlimited.</p>'; f.querySelector("button").disabled = true; return; }
-    const day = await latestDay(mp);
-    const { data } = day ? await sb.from("snapshots").select("list_name").eq("marketplace", mp).eq("captured_on", day).not("list_rank", "is", null) : { data: [] };
-    const cats = [...new Set((data || []).map((r) => r.list_name).filter(Boolean))].sort();
-    sel.innerHTML = '<option value="">All categories</option>' + cats.map((c) => `<option>${esc(c)}</option>`).join("");
-    $("#db-count").textContent = day ? `Updated ${fmtDate(day)}` : "";
+    const { data } = await sb.rpc("db_meta", { mp: f.elements.mp.value });
+    sel.innerHTML = '<option value="">All categories</option>' + (data?.categories || []).map((c) => `<option>${esc(c)}</option>`).join("");
+    $("#db-count").textContent = data?.day ? `Updated ${fmtDate(data.day)}` : "";
     if (!$("#db-list").innerHTML) $("#db-list").innerHTML = '<p class="empty">Pick a country and filters, then press Search.</p>';
   }
   $("#f-db").elements.mp.addEventListener("change", () => loadDbCats(dbPlan));
@@ -354,47 +371,27 @@
     const min = f.min.value === "" ? null : Number(f.min.value), max = f.max.value === "" ? null : Number(f.max.value);
     if (min != null && max != null && min > max) { msg(m, "Min price is higher than max price.", "err"); return; }
     btn.disabled = true; msg(m, "Searching…");
-    const { data: quota, error: qe } = await sb.rpc("use_search");
-    if (qe || !quota) { btn.disabled = false; msg(m, "Couldn't search right now. Please try again.", "err"); return; }
-    if (!quota.ok) { btn.disabled = false; msg(m, `You've used all ${quota.limit} searches for this month. Upgrade to Professional for unlimited searches.`, "err"); return; }
-    const mp = f.mp.value, day = await latestDay(mp);
-    if (!day) { btn.disabled = false; msg(m, "No products saved for this country yet.", "err"); return; }
-    let q = sb.from("snapshots").select("asin,list_rank,list_name,price,currency,rating,reviews,bsr,bought_past_month,bought_min,products(title,image,brand)")
-      .eq("marketplace", mp).eq("captured_on", day).not("list_rank", "is", null);
-    if (f.cat.value) q = q.eq("list_name", f.cat.value);
-    if (min != null) q = q.gte("price", min);
-    if (max != null) q = q.lte("price", max);
-    if (f.rating.value) q = q.gte("rating", Number(f.rating.value));
-    const [{ data: rows, error }, { data: tr }] = await Promise.all([q.limit(1000), sb.from("tracked").select("marketplace,asin")]);
+    const mp = f.mp.value;
+    const { data: res, error } = await sb.rpc("db_search", { mp, cat: f.cat.value || null, q: f.q.value.trim() || null, min_price: min, max_price: max, min_rating: f.rating.value ? Number(f.rating.value) : null, sort: f.sort.value });
     btn.disabled = false;
-    if (error) { msg(m, "Couldn't load products. Please try again.", "err"); return; }
-    const words = f.q.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
-    let list = (rows || []).filter((r) => !words.length || words.every((w) => ((r.products?.title || "") + " " + (r.products?.brand || "")).toLowerCase().includes(w)));
-    const by = {
-      rank: (a, b) => (a.list_name || "").localeCompare(b.list_name || "") || a.list_rank - b.list_rank,
-      price_asc: (a, b) => (a.price ?? 1e12) - (b.price ?? 1e12),
-      price_desc: (a, b) => (b.price ?? -1) - (a.price ?? -1),
-      reviews: (a, b) => (b.reviews ?? -1) - (a.reviews ?? -1),
-      reviews_asc: (a, b) => (a.reviews ?? 1e12) - (b.reviews ?? 1e12),
-      rating: (a, b) => (b.rating ?? -1) - (a.rating ?? -1) || (b.reviews ?? 0) - (a.reviews ?? 0),
-    }[f.sort.value];
-    list.sort(by);
-    const mine = new Set((tr || []).map((t) => t.marketplace + "|" + t.asin));
-    $("#u-searches").textContent = quota.limit >= 1000000 ? `${quota.used} (unlimited)` : `${quota.used} of ${quota.limit}`;
-    $("#b-searches").style.width = quota.limit >= 1000000 ? "4%" : Math.min(100, (quota.used / quota.limit) * 100) + "%";
-    msg(m, `${list.length} product${list.length === 1 ? "" : "s"} found.${quota.limit < 1000000 ? ` ${quota.limit - quota.used} searches left this month.` : ""}`, "ok");
+    if (error || !res) { msg(m, "Couldn't search right now. Please try again.", "err"); return; }
+    if (!res.ok) { msg(m, res.limit ? `You've used all ${res.limit} searches for this month. Upgrade to Professional for unlimited searches.` : "Choose a plan to search the Product Database.", "err"); return; }
+    const list = res.rows || [];
+    $("#u-searches").textContent = res.limit >= 1000000 ? `${res.used} (unlimited)` : `${res.used} of ${res.limit}`;
+    $("#b-searches").style.width = res.limit >= 1000000 ? "4%" : Math.min(100, (res.used / res.limit) * 100) + "%";
+    msg(m, `${list.length >= 500 ? "500+" : list.length} product${list.length === 1 ? "" : "s"} found.${res.limit < 1000000 ? ` ${res.limit - res.used} searches left this month.` : ""}`, "ok");
     if (!list.length) { $("#db-list").innerHTML = '<p class="empty">No products match. Try fewer filters or another category.</p>'; return; }
     $("#db-list").innerHTML = `<div class="tablewrap"><table class="tr-table db-table"><thead><tr><th>#</th><th>Product</th><th>Category</th><th>Price</th><th>Rating</th><th>Est. sales / month</th><th></th></tr></thead><tbody>${
       list.slice(0, 200).map((r) => {
-        const p = r.products || {}, k = mp + "|" + r.asin;
-        const name = p.title ? esc(p.title.length > 70 ? p.title.slice(0, 70) + "…" : p.title) : r.asin;
+        const k = mp + "|" + r.asin;
+        const name = r.title ? esc(r.title.length > 70 ? r.title.slice(0, 70) + "…" : r.title) : r.asin;
         return `<tr><td>${r.list_rank}</td>
-          <td class="prod">${p.image ? `<img src="${esc(p.image)}" alt="" loading="lazy">` : '<span class="noimg"></span>'}<div><a href="https://www.${mp}/dp/${r.asin}" target="_blank" rel="noopener">${name}</a><small class="muted">${p.brand ? esc(p.brand) + " · " : ""}${r.asin}</small></div></td>
+          <td class="prod">${r.image ? `<img src="${esc(r.image)}" alt="" loading="lazy">` : '<span class="noimg"></span>'}<div><a href="https://www.${mp}/dp/${r.asin}" target="_blank" rel="noopener">${name}</a><small class="muted">${r.brand ? esc(r.brand) + " · " : ""}${r.asin}</small></div></td>
           <td>${esc(r.list_name || "—")}</td>
           <td>${r.price != null ? esc(r.currency || "") + "&nbsp;" + Number(r.price).toFixed(2) : "—"}</td>
           <td>${r.rating ? r.rating + " ★<small class=\"muted\">" + num(r.reviews) + " reviews</small>" : "—"}</td>
           <td>${salesCell(MirsadSales.units(r))}</td>
-          <td class="acts">${mine.has(k) ? '<span class="small muted">Tracking</span>' : `<button class="link" data-track="${esc(k)}">Track</button>`}</td></tr>`;
+          <td class="acts">${r.tracked ? '<span class="small muted">Tracking</span>' : `<button class="link" data-track="${esc(k)}">Track</button>`}</td></tr>`;
       }).join("")
     }</tbody></table></div>${list.length > 200 ? '<p class="small muted">Showing the first 200. Add filters to narrow it down.</p>' : ""}`;
     $("#db-list").querySelectorAll("[data-track]").forEach((b) => b.addEventListener("click", async () => {
@@ -407,6 +404,50 @@
       msg(m, `Now tracking ${asin}. See it in Product Tracker above.`, "ok");
       loadTracker(user, trPlan);
     }));
+  });
+
+  // ---------- keyword list ----------
+  function fillKwFor() {
+    const sel = $("#f-kw").elements.for, keep = sel.value;
+    sel.innerHTML = Object.entries(MP_NAME).map(([mp, n]) => `<option value="${mp}|">General – ${n}</option>`).join("") +
+      trList.map((t) => `<option value="${esc(t.marketplace + "|" + t.asin)}">${MP_NAME[t.marketplace]} · ${t.asin}</option>`).join("");
+    if ([...sel.options].some((o) => o.value === keep)) sel.value = keep;
+    loadKeywords();
+  }
+  async function loadKeywords() {
+    const sel = $("#f-kw").elements.for;
+    if (!sel.value) return;
+    const [mp, asin] = sel.value.split("|");
+    const { data, error } = await sb.from("keywords").select("id,keyword").eq("marketplace", mp).eq("asin", asin).order("created_at");
+    const box = $("#kw-list");
+    if (error) { box.innerHTML = '<p class="msg err">Couldn\'t load keywords. Please refresh.</p>'; return; }
+    const line = (data || []).map((k) => k.keyword).join(" ");
+    const bytes = new TextEncoder().encode(line).length;
+    $("#kw-count").textContent = data.length ? `${data.length} keyword${data.length > 1 ? "s" : ""} · ${bytes} bytes${bytes > 249 ? " (over Amazon's 249)" : ""}` : "";
+    box.innerHTML = data.length
+      ? `<div class="chips">${data.map((k) => `<span class="chip">${esc(k.keyword)}<button type="button" aria-label="Remove ${esc(k.keyword)}" data-kw="${k.id}">×</button></span>`).join("")}</div>
+         <button class="btn ghost" type="button" id="kw-copy">Copy for search terms</button>`
+      : '<p class="empty">No keywords saved here yet.</p>';
+    box.querySelectorAll("[data-kw]").forEach((b) => b.addEventListener("click", async () => {
+      const { error: e } = await sb.from("keywords").delete().eq("id", b.dataset.kw);
+      if (e) { msg($("#kw-msg"), "Couldn't remove it. Please try again.", "err"); return; }
+      loadKeywords();
+    }));
+    $("#kw-copy")?.addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(line); msg($("#kw-msg"), "Copied.", "ok"); } catch { msg($("#kw-msg"), line, "ok"); }
+    });
+  }
+  $("#f-kw").elements.for.addEventListener("change", () => { msg($("#kw-msg"), ""); loadKeywords(); });
+  $("#f-kw").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = e.target.elements, [mp, asin] = f.for.value.split("|");
+    const words = [...new Set(f.words.value.split(/[,\n]/).map((w) => w.trim().toLowerCase().replace(/\s+/g, " ")).filter(Boolean))];
+    if (!words.length) { msg($("#kw-msg"), "Type at least one keyword.", "err"); return; }
+    if (words.some((w) => w.length > 80)) { msg($("#kw-msg"), "Each keyword can be up to 80 characters.", "err"); return; }
+    const { error } = await sb.from("keywords").upsert(words.map((keyword) => ({ marketplace: mp, asin, keyword })), { onConflict: "user_id,marketplace,asin,keyword", ignoreDuplicates: true });
+    if (error) { msg($("#kw-msg"), "Couldn't save. Please try again.", "err"); return; }
+    f.words.value = ""; msg($("#kw-msg"), `Saved ${words.length} keyword${words.length > 1 ? "s" : ""}.`, "ok");
+    loadKeywords();
   });
 
   // ---------- routing ----------
