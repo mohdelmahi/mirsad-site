@@ -46,3 +46,17 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;p
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}.stats .card{margin:0;padding:18px}.stats b{display:block;font-size:26px}.stats span{color:var(--dim);font-size:13px}
 .st{font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;border:1px solid var(--line)}.st.active,.st.trialing{color:var(--green);border-color:rgba(52,211,153,.4)}.st.past_due,.st.unpaid{color:#FBBF77}.st.canceled{color:var(--red)}
 @media(max-width:760px){.grid,.plans,.form.two{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
+/* product tracker */
+select{font:inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 12px}
+.track-add{display:flex;gap:12px;align-items:end;flex-wrap:wrap}.track-add .grow{flex:1;min-width:240px}
+.empty{padding:22px;border:1px dashed var(--line);border-radius:12px;color:var(--dim);text-align:center;margin:8px 0}
+.tr-table td{vertical-align:middle}.tr-table td.prod{display:flex;gap:12px;align-items:center;white-space:normal;min-width:280px}
+.tr-table td.prod img,.noimg{width:44px;height:44px;object-fit:contain;border-radius:8px;background:#fff;border:1px solid var(--line);flex:none}
+.tr-table td.prod a{font-weight:600;color:var(--ink);text-decoration:none}.tr-table td.prod a:hover{color:var(--blue)}
+.tr-table small{display:block;font-size:12px}.tr-table small.up,.tr-table small.down{display:inline;font-weight:700}
+.up{color:var(--green)}.down{color:var(--red)}.cat{max-width:160px;overflow:hidden;text-overflow:ellipsis}
+.spark polyline{fill:none;stroke:var(--blue);stroke-width:2}
+.acts{text-align:right}.acts .link{margin-left:12px;font-weight:700;font-size:13px}.link.danger{color:var(--red)}.link:disabled{color:var(--faint);cursor:default}
+tr.hist td{background:var(--card2);white-space:normal}
+.chart{display:inline-block;width:min(480px,100%);vertical-align:top;margin:6px 12px 6px 0}.chart b{font-size:13px;color:var(--dim)}
+.chart svg{width:100%;height:auto}.chart polyline{fill:none;stroke:var(--blue);stroke-width:2}.chart circle{fill:var(--blue)}.chart text{font-size:10px;fill:var(--faint)}

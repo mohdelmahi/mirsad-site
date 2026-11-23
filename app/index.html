@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="app.css?v=3">
+<link rel="stylesheet" href="app.css?v=4">
 <link rel="stylesheet" href="../css/light.css?v=2">
 </head>
 <body class="lt">
@@ -83,11 +83,23 @@
       <p class="small muted">Early users: enter code <b>EARLY30</b> at checkout for 30% off your first year. Payments are handled securely by Stripe.</p>
     </div>
 
+    <div class="card" id="tracker">
+      <div class="row-between"><h2>Product Tracker</h2><span id="tr-count" class="small muted"></span></div>
+      <form id="f-track" class="track-add">
+        <label class="grow">Amazon link or ASIN<input name="q" placeholder="https://www.amazon.ae/dp/B0… or B0…" autocomplete="off" required></label>
+        <label>Country<select name="mp"><option value="amazon.ae">UAE</option><option value="amazon.sa">Saudi Arabia</option><option value="amazon.eg">Egypt</option></select></label>
+        <button class="btn" type="submit">Track product</button>
+      </form>
+      <p id="track-msg" class="msg" role="status"></p>
+      <div id="tr-list"></div>
+      <p class="small muted">Prices, Best Sellers Rank and "bought in past month" are checked once a day. A new product shows its first numbers after the next daily check.</p>
+    </div>
+
     <div class="card">
       <h2>Your tools</h2>
       <div class="tools">
         <div><b>Product Database</b><span>Amazon UAE, KSA and Egypt</span><em>Coming soon</em></div>
-        <div><b>Product Tracker</b><span>Sales, revenue and BSR over time</span><em>Coming soon</em></div>
+        <div><b>Product Tracker</b><span>Price, BSR and sales signals over time</span><a href="#tracker">Open →</a></div>
         <div><b>Alerts</b><span>Price, reviews, stock and BSR changes</span><em>Coming soon</em></div>
         <div><b>Keyword Scout</b><span>Search volume and Reverse ASIN</span><em>Coming soon</em></div>
         <div><b>Keyword List</b><span>Save keywords for each product</span><em>Coming soon</em></div>
@@ -116,5 +128,5 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js?v=2"></script>
-<script src="app.js?v=3"></script>
+<script src="app.js?v=4"></script>
 </body></html>
