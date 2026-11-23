@@ -228,17 +228,17 @@
     (prods || []).forEach((p) => { P[key(p)] = p; });
     (snaps || []).forEach((s) => { (S[key(s)] ||= []).push(s); });
 
-    box.innerHTML = `<div class="tablewrap"><table class="tr-table"><thead><tr><th>Product</th><th>Price</th><th>BSR</th><th>BSR trend</th><th>Bought past month</th><th>Rating</th><th></th></tr></thead><tbody>${
+    box.innerHTML = `<div class="tablewrap"><table class="tr-table"><thead><tr><th>Product</th><th>Price</th><th>BSR</th><th>BSR trend</th><th>Bought last month</th><th>Rating</th><th></th></tr></thead><tbody>${
       tracked.map((t) => {
         const k = key(t), p = P[k] || {}, h = S[k] || [], last = h[h.length - 1], prev = h[h.length - 2];
         const link = `https://www.${t.marketplace}/dp/${t.asin}`;
-        const name = p.title ? esc(p.title.length > 70 ? p.title.slice(0, 70) + "…" : p.title) : `<span class="muted">${t.asin}</span>`;
+        const name = p.title ? esc(p.title.length > 60 ? p.title.slice(0, 60) + "…" : p.title) : `<span class="muted">${t.asin}</span>`;
         const img = p.image ? `<img src="${esc(p.image)}" alt="" loading="lazy">` : '<span class="noimg"></span>';
         const cells = last
-          ? `<td>${last.price != null ? esc(last.currency || "") + " " + num(last.price) : "—"}${change(last.price, prev?.price, true)}</td>
+          ? `<td>${last.price != null ? esc(last.currency || "") + "&nbsp;" + Number(last.price).toFixed(2) : "—"}${change(last.price, prev?.price, true)}</td>
              <td>${last.bsr ? "#" + num(last.bsr) : "—"}${change(last.bsr, prev?.bsr, true)}${last.bsr_category ? `<small class="muted cat">${esc(last.bsr_category)}</small>` : ""}</td>
              <td>${spark(h.map((r) => r.bsr), true)}</td>
-             <td>${esc(last.bought_past_month || "—")}</td>
+             <td>${esc((last.bought_past_month || "—").replace(/\s*bought in past month/i, ""))}</td>
              <td>${last.rating ? last.rating + " ★ (" + num(last.reviews) + ")" : "—"}</td>`
           : `<td colspan="5" class="muted small">Waiting for the first daily check</td>`;
         return `<tr data-k="${esc(k)}"><td class="prod">${img}<div><a href="${link}" target="_blank" rel="noopener">${name}</a><small class="muted">${MP_NAME[t.marketplace]} · ${t.asin}${h.length ? ` · ${h.length} day${h.length > 1 ? "s" : ""} of data` : ""}</small></div></td>${cells}
