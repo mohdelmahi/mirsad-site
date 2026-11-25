@@ -138,7 +138,7 @@
         if (!j.success) throw new Error(j.message || 'failed');
         form.reset();
         msg.className = 'mx-contact-msg ok';
-        msg.textContent = "Thanks, your message has been sent. We'll get back to you soon.";
+        msg.textContent = 'Your enquiry is sent, someone from our customer service will contact you shortly. Thank you';
       })
       .catch(function () {
         msg.className = 'mx-contact-msg err';

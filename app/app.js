@@ -50,7 +50,9 @@
       email: f.get("email"), password: f.get("password"),
       options: { emailRedirectTo: location.origin + "/app/", data: { full_name: f.get("full_name"), phone: f.get("phone") } },
     });
-    if (error) return msg($("#auth-msg"), error.message, "err");
+    if (error) return msg($("#auth-msg"), /registered|exists/i.test(error.message) ? "An account with this email already exists. Sign in, or use \"Forgot your password?\" to reset it." : error.message, "err");
+    // Supabase doesn't create a second account for an email that's already registered; it returns a user with no identities.
+    if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) return msg($("#auth-msg"), "An account with this email already exists. Sign in, or use \"Forgot your password?\" to reset it.", "err");
     if (!data.session) { e.target.reset(); msg($("#auth-msg"), "Almost done. We've sent you an email. Click the link in it to confirm your account.", "ok"); }
   });
 
